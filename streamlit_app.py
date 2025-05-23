@@ -127,127 +127,70 @@ if topic:
             'sentiment': 'mean'
         }).reset_index()
 
-        st.subheader("📊 Engagement & Sentiment Over Time")
-        if not time_series.empty:
-            labels = time_series['created_at'].dt.strftime('%Y-%m-%d %H:%M').tolist()
-            engagement_data = time_series['engagement'].fillna(0).tolist()
-            sentiment_data = time_series['sentiment'].fillna(0).tolist()
-            chart_config = {
-                "type": "line",
-                "data": {
-                    "labels": labels,
-                    "datasets": [
-                        {
-                            "label": "Engagement (Likes + Retweets)",
-                            "data": engagement_data,
-                            "borderColor": "#1f77b4",
-                            "backgroundColor": "rgba(31, 119, 180, 0.2)",
-                            "fill": False,
-                            "yAxisID": "y"
-                        },
-                        {
-                            "label": "Sentiment (Mean)",
-                            "data": sentiment_data,
-                            "borderColor": "#ff7f0e",
-                            "backgroundColor": "rgba(255, 127, 14, 0.2)",
-                            "fill": False,
-                            "yAxisID": "y1"
-                        }
-                    ]
-                },
-                "options": {
-                    "scales": {
-                        "y": {
-                            "type": "linear",
-                            "display": True,
-                            "position": "left",
-                            "title": {"display": True, "text": "Engagement"}
-                        },
-                        "y1": {
-                            "type": "linear",
-                            "display": True,
-                            "position": "right",
-                            "title": {"display": True, "text": "Sentiment"},
-                            "grid": {"drawOnChartArea": False}
-                        },
-                        "x": {
-                            "title": {"display": True, "text": "Time"}
-                        }
-                    },
-                    "plugins": {
-                        "legend": {"display": True},
-                        "title": {"display": True, "text": "Engagement & Sentiment Over Time"}
-                    }
-                }
-            }
-            st.write("```chartjs\n" + str(chart_config) + "\n```")
-        else:
-            st.warning("No data available for engagement and sentiment trends. Check if 'created_at' is valid.")
+# 替换原始 chartjs 写法为原生 Streamlit 图表方式
 
-        st.subheader("💬 Sentiment Distribution")
-        if filtered_df['sentiment'].notnull().sum() > 0:
-            sentiment_binned = pd.cut(filtered_df['sentiment'], bins=10)
-            sentiment_counts = sentiment_binned.value_counts().sort_index()
-            chart_config = {
-                "type": "bar",
-                "data": {
-                    "labels": [str(interval) for interval in sentiment_counts.index],
-                    "datasets": [{
-                        "label": "Sentiment Distribution",
-                        "data": sentiment_counts.tolist(),
-                        "backgroundColor": "#2ca02c",
-                        "borderColor": "#1f77b4",
-                        "borderWidth": 1
-                    }]
-                },
-                "options": {
-                    "scales": {
-                        "y": {"title": {"display": True, "text": "Count"}},
-                        "x": {"title": {"display": True, "text": "Sentiment Range"}}
-                    },
-                    "plugins": {
-                        "legend": {"display": False},
-                        "title": {"display": True, "text": "Sentiment Distribution"}
-                    }
-                }
-            }
-            st.write("```chartjs\n" + str(chart_config) + "\n```")
-        else:
-            st.warning("No sentiment data available to display distribution.")
+# --- 时间趋势图 ---
+st.subheader("📊 Engagement & Sentiment Over Time")
+if not time_series.empty:
+    fig, ax = plt.subplots()
+    ax.plot(time_series['created_at'], time_series['engagement'], label='Engagement (Likes + Retweets)', color='tab:blue')
+    ax.set_ylabel('Engagement', color='tab:blue')
+    ax.tick_params(axis='y', labelcolor='tab:blue')
 
-        st.subheader("🔍 Sample Posts")
-        st.dataframe(filtered_df[['created_at', 'text', 'sentiment', 'engagement']].head(10))
+    ax2 = ax.twinx()
+    ax2.plot(time_series['created_at'], time_series['sentiment'], label='Sentiment (Mean)', color='tab:orange')
+    ax2.set_ylabel('Sentiment', color='tab:orange')
+    ax2.tick_params(axis='y', labelcolor='tab:orange')
 
-        st.subheader("🌐 Word Cloud")
-        text = " ".join(filtered_df['text'].tolist())
-        if text.strip():
-            wordcloud = WordCloud(width=800, height=400, background_color='white', max_words=100).generate(text)
-            fig, ax = plt.subplots()
-            ax.imshow(wordcloud, interpolation='bilinear')
-            ax.axis('off')
-            st.pyplot(fig)
-        else:
-            st.warning("No text available for word cloud. Using sample text.")
-            wordcloud = WordCloud(width=800, height=400, background_color='white', max_words=100).generate("fitness gym workout motivation health")
-            fig, ax = plt.subplots()
-            ax.imshow(wordcloud, interpolation='bilinear')
-            ax.axis('off')
-            st.pyplot(fig)
+    ax.set_xlabel('Time')
+    ax.set_title('Engagement & Sentiment Over Time')
+    fig.autofmt_xdate()
+    st.pyplot(fig)
+else:
+    st.warning("No data available for engagement and sentiment trends. Check if 'created_at' is valid.")
 
-        st.subheader("🔍 Popular Subtopics within this Topic")
-        stop_words = set(stopwords.words('english')) - {'run', 'pump'}
-        texts = filtered_df['text'].tolist()
-        st.write(f"Number of posts after filtering: {len(texts)}")
+# --- 情绪分布柱状图 ---
+st.subheader("💬 Sentiment Distribution")
+if filtered_df['sentiment'].notnull().sum() > 0:
+    sentiment_binned = pd.cut(filtered_df['sentiment'], bins=10)
+    sentiment_counts = sentiment_binned.value_counts().sort_index()
+    fig, ax = plt.subplots()
+    sentiment_counts.plot(kind='bar', ax=ax, color='tab:green')
+    ax.set_title('Sentiment Distribution')
+    ax.set_xlabel('Sentiment Range')
+    ax.set_ylabel('Count')
+    st.pyplot(fig)
+else:
+    st.warning("No sentiment data available to display distribution.")
 
-        processed_texts = []
-        for doc in texts:
-            tokens = [
-                word for word in doc.lower().split()
-                if (word.isalnum() or word.startswith('#') or word in ['🦵🏽', '💪🏽']) and word not in stop_words
-            ]
-            processed_texts.append(" ".join(tokens))
-        processed_texts = [doc for doc in processed_texts if len(doc.split()) > 1]
-        st.write(f"Number of posts after cleaning: {len(processed_texts)}")
+# --- 最佳发布时间 ---
+st.subheader("⏰ Optimal Posting Times")
+filtered_df['hour'] = filtered_df['timestamp'].dt.hour
+hourly_engagement = filtered_df.groupby('hour')['engagement'].mean().reset_index()
+if not hourly_engagement.empty:
+    fig, ax = plt.subplots()
+    ax.bar(hourly_engagement['hour'], hourly_engagement['engagement'], color='mediumpurple')
+    ax.set_xlabel('Hour of Day')
+    ax.set_ylabel('Average Engagement')
+    ax.set_title('Optimal Posting Times')
+    st.pyplot(fig)
+else:
+    st.warning("No data available for optimal posting times.")
+
+# --- 预测结果对比图 ---
+st.subheader("📈 Predicted vs Actual Engagement")
+chart_df = X_test.copy()
+chart_df['Predicted Engagement'] = y_pred
+chart_df['Actual Engagement'] = y_test.values
+fig, ax = plt.subplots()
+ax.plot(chart_df.index, chart_df['Predicted Engagement'], label='Predicted', color='tab:purple')
+ax.plot(chart_df.index, chart_df['Actual Engagement'], label='Actual', color='tab:red')
+ax.set_title('Predicted vs Actual Engagement')
+ax.set_xlabel('Post Index')
+ax.set_ylabel('Engagement')
+ax.legend()
+st.pyplot(fig)
+
 
         if len(processed_texts) >= 2:
             vectorizer = CountVectorizer(max_df=0.9, min_df=1, max_features=1000)
