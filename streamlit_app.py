@@ -14,6 +14,13 @@ import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 import numpy as np
 
+# 再次确保必要资源存在（尤其适合 Streamlit Cloud）
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('vader_lexicon')
+
+from nltk.tokenize import word_tokenize
+
 # Download NLTK resources if not already present
 try:
     nltk.data.find('tokenizers/punkt')
