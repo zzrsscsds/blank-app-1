@@ -14,12 +14,20 @@ import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 import numpy as np
 
-# 再次确保必要资源存在（尤其适合 Streamlit Cloud）
-nltk.download('punkt')
-nltk.download('stopwords')
-nltk.download('vader_lexicon')
+# ✅ 定义一个通用的函数确保资源存在
+def ensure_nltk_resource(resource_name):
+    try:
+        nltk.data.find(resource_name)
+        st.write(f"✅ NLTK resource '{resource_name}' 已存在。")
+    except LookupError:
+        st.warning(f"正在下载 NLTK 资源：'{resource_name}'...")
+        nltk.download(resource_name)
+        st.success(f"✅ 下载完成：{resource_name}")
 
-from nltk.tokenize import word_tokenize
+# ✅ 确保所需资源全部存在
+ensure_nltk_resource('tokenizers/punkt')
+ensure_nltk_resource('corpora/stopwords')
+ensure_nltk_resource('sentiment/vader_lexicon')
 
 # Download NLTK resources if not already present
 try:
