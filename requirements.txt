@@ -1,8 +1,8 @@
 streamlit
 pandas
+matplotlib
 nltk
 scikit-learn
 wordcloud
-matplotlib
 statsmodels
-numpy
+prophet
