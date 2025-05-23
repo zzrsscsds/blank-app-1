@@ -1,1 +1,8 @@
 streamlit
+pandas
+nltk
+scikit-learn
+wordcloud
+matplotlib
+statsmodels
+numpy
