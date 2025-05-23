@@ -32,7 +32,6 @@ except LookupError:
 st.set_page_config(layout="wide")
 st.title("📊 Real-Time Social Media Trend Forecaster")
 
-# ✅ 定义一个通用的函数确保资源存在
 def ensure_nltk_resource(resource_name):
     try:
         nltk.data.find(resource_name)
@@ -41,8 +40,6 @@ def ensure_nltk_resource(resource_name):
         st.warning(f"正在下载 NLTK 资源：'{resource_name}'...")
         nltk.download(resource_name)
         st.success(f"✅ 下载完成：{resource_name}")
-
-# ✅ 确保所需资源全部存在
 ensure_nltk_resource('tokenizers/punkt')
 ensure_nltk_resource('corpora/stopwords')
 ensure_nltk_resource('sentiment/vader_lexicon')
@@ -258,7 +255,7 @@ if topic:
         processed_texts = []
         for doc in texts:
             tokens = [
-                word for word in word_tokenize(doc.lower())
+                word for word in doc.lower().split()
                 if (word.isalnum() or word.startswith('#') or word in ['🦵🏽', '💪🏽']) and word not in stop_words
             ]
             processed_texts.append(" ".join(tokens))
