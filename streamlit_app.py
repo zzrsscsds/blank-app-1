@@ -381,3 +381,30 @@ if topic:
 
     else:
         st.warning(f"No posts found for '{topic}'. Check if the keyword exists in the data.")
+
+（前略：原始代码不变，补充 Prophet 部分）
+
+        st.subheader("🧠 Prophet-Based Engagement Forecast (48 Hours)")
+        try:
+            from prophet import Prophet
+            df_prophet = time_series[['created_at', 'engagement']].rename(columns={
+                'created_at': 'ds',
+                'engagement': 'y'
+            })
+
+            prophet_model = Prophet()
+            prophet_model.fit(df_prophet)
+
+            future = prophet_model.make_future_dataframe(periods=48, freq='h')
+            forecast = prophet_model.predict(future)
+
+            fig1 = prophet_model.plot(forecast)
+            st.pyplot(fig1)
+
+            fig2 = prophet_model.plot_components(forecast)
+            st.pyplot(fig2)
+
+        except ImportError:
+            st.error("Prophet library not found. Please run: pip install prophet")
+        except Exception as e:
+            st.error(f"Prophet model error: {e}")
