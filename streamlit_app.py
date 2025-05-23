@@ -382,8 +382,7 @@ if topic:
     else:
         st.warning(f"No posts found for '{topic}'. Check if the keyword exists in the data.")
 
-（前略：原始代码不变，补充 Prophet 部分）
-
+#new one
         st.subheader("🧠 Prophet-Based Engagement Forecast (48 Hours)")
         try:
             from prophet import Prophet
