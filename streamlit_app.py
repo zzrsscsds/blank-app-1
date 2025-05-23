@@ -192,18 +192,19 @@ ax.legend()
 st.pyplot(fig)
 
 
-        if len(processed_texts) >= 2:
-            vectorizer = CountVectorizer(max_df=0.9, min_df=1, max_features=1000)
-            dtm = vectorizer.fit_transform(processed_texts)
-            lda = LatentDirichletAllocation(n_components=3, random_state=42)
-            lda.fit(dtm)
-            words = vectorizer.get_feature_names_out()
-            for i, topic_dist in enumerate(lda.components_):
-                topic_words = [words[i] for i in topic_dist.argsort()[-5:][::-1]]
-                st.write(f"**Topic {i+1}:** {', '.join(topic_words)}")
-        else:
-            hashtags = filtered_df['text'].str.findall(r'#\w+').explode().value_counts().head(5)
-            st.write("**Top Hashtags**: " + ", ".join(hashtags.index if not hashtags.empty else ["No hashtags found"]))
+if len(processed_texts) >= 2:
+    vectorizer = CountVectorizer(max_df=0.9, min_df=1, max_features=1000)
+    dtm = vectorizer.fit_transform(processed_texts)
+    lda = LatentDirichletAllocation(n_components=3, random_state=42)
+    lda.fit(dtm)
+    words = vectorizer.get_feature_names_out()
+    for i, topic_dist in enumerate(lda.components_):
+        topic_words = [words[i] for i in topic_dist.argsort()[-5:][::-1]]
+        st.write(f"**Topic {i+1}:** {', '.join(topic_words)}")
+else:
+    hashtags = filtered_df['text'].str.findall(r'#\\w+').explode().value_counts().head(5)
+    st.write("**Top Hashtags**: " + ", ".join(hashtags.index if not hashtags.empty else ["No hashtags found"]))
+
 
         st.subheader("📅 48-Hour Engagement Forecast")
         if len(time_series) >= 5:
