@@ -31,7 +31,7 @@ except LookupError:
 st.set_page_config(layout="wide")
 st.title("📊 Real-Time Social Media Trend Forecaster")
 
-st.write("CSV 文件加载成功：", df.shape)
+st.write("CSV 文件加载成功：", combined_df.shape)
 
 @st.cache_data
 def load_combined_data():
