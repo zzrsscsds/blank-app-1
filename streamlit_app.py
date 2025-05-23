@@ -365,6 +365,12 @@ except Exception as e:
     st.error(f"Prophet model error: {e}")
 
 # Enhanced Regression Features for Engagement Prediction
+with st.spinner("Training ML model..."):
+    result = preprocess_and_train(filtered_df)
+X_test = result['X_test']
+y_test = result['y_test']
+y_pred = result['y_pred']
+
 st.subheader("📈 Predicting Engagement (Enhanced Features)")
 filtered_df = filtered_df.rename(columns={"created_at": "timestamp"})
 try:
