@@ -165,7 +165,7 @@ if topic:
 
         # --- 最佳发布时间 ---
         st.subheader("⏰ Optimal Posting Times")
-        filtered_df['hour'] = filtered_df['timestamp'].dt.hour
+        filtered_df['hour'] = filtered_df['created_at'].dt.hour
         hourly_engagement = filtered_df.groupby('hour')['engagement'].mean().reset_index()
         if not hourly_engagement.empty:
             fig, ax = plt.subplots()
