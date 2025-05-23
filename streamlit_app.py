@@ -32,19 +32,6 @@ except LookupError:
 st.set_page_config(layout="wide")
 st.title("📊 Real-Time Social Media Trend Forecaster")
 
-def ensure_nltk_resource(resource_name):
-    try:
-        nltk.data.find(resource_name)
-        st.write(f"✅ NLTK resource '{resource_name}' 已存在。")
-    except LookupError:
-        st.warning(f"正在下载 NLTK 资源：'{resource_name}'...")
-        nltk.download(resource_name)
-        st.success(f"✅ 下载完成：{resource_name}")
-ensure_nltk_resource('tokenizers/punkt')
-ensure_nltk_resource('corpora/stopwords')
-ensure_nltk_resource('sentiment/vader_lexicon')
-
-
 @st.cache_data
 def load_combined_data():
     try:
