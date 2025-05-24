@@ -78,7 +78,6 @@ def extract_topics(texts):
     padded_topics = [topics[i] if i < len(topics) else 0 for i in range(len(texts))]
     return padded_topics
 
-    ]
     vectorizer = CountVectorizer(max_df=0.95, min_df=2)
     dtm = vectorizer.fit_transform(processed_texts)
     lda = LatentDirichletAllocation(n_components=3, random_state=42)
