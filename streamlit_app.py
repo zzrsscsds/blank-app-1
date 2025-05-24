@@ -11,24 +11,28 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import r2_score, mean_squared_error
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+from statsmodels.tsa.api import VAR
 from statsmodels.tsa.arima.model import ARIMA
+from prophet import Prophet
 import numpy as np
 
 # Download NLTK resources if not already present
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
-try:
-    nltk.data.find('corpora/stopwords')
-except LookupError:
-    nltk.download('stopwords')
-try:
-    nltk.data.find('sentiment/vader_lexicon')
-except LookupError:
-    nltk.download('vader_lexicon')
+for resource in ['punkt', 'stopwords', 'vader_lexicon']:
+    try:
+        nltk.data.find(f'tokenizers/{resource}' if resource == 'punkt' else f'corpora/{resource}')
+    except LookupError:
+        nltk.download(resource)
 
-st.set_page_config(layout="wide")
+st.set_page_config(page_title="Social Trends Forecaster", layout="wide")
+st.markdown("""
+    <style>
+        .main { background-color: #fafafa; }
+        h1 { color: #1f77b4; }
+        .stButton>button { background-color: #1f77b4; color: white; border-radius: 5px; }
+        .stDownloadButton>button { background-color: #2ca02c; color: white; border-radius: 5px; }
+    </style>
+""", unsafe_allow_html=True)
+
 st.title("📊 Real-Time Social Media Trend Forecaster")
 
 @st.cache_data
@@ -41,11 +45,7 @@ def load_combined_data():
         st.error(f"Error loading CSV: {e}")
         return pd.DataFrame()
 
-try:
-    sid = SentimentIntensityAnalyzer()
-except LookupError:
-    st.error("Failed to load VADER lexicon.")
-    st.stop()
+sid = SentimentIntensityAnalyzer()
 
 def compute_sentiment(text):
     try:
@@ -53,76 +53,56 @@ def compute_sentiment(text):
     except:
         return 0.0
 
-def preprocess_and_train(df):
-    features = ['sentiment', 'text_length', 'hashtag_count', 'is_media']
-    df['text_length'] = df['text'].apply(len)
-    df['hashtag_count'] = df['text'].apply(lambda x: x.count('#'))
-    df['is_media'] = df['text'].str.contains('https://t.co', na=False).astype(int)
-    X = df[features].fillna(0)
-    y = df['engagement'].fillna(0)
-    if len(X) < 10:
-        raise ValueError("Not enough data for training.")
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-    model = RandomForestRegressor(n_estimators=100, random_state=42)
-    model.fit(X_train, y_train)
-    y_pred = model.predict(X_test)
-    return {
-        'r2_score': r2_score(y_test, y_pred),
-        'rmse': np.sqrt(mean_squared_error(y_test, y_pred)),
-        'X_test': X_test,
-        'y_test': y_test,
-        'y_pred': y_pred
-    }
+def extract_topics(texts):
+    stop_words = set(stopwords.words('english'))
+    processed_texts = [
+        " ".join([
+            word for word in word_tokenize(doc.lower())
+            if word.isalnum() and word not in stop_words
+        ]) for doc in texts if isinstance(doc, str)
+    ]
+    vectorizer = CountVectorizer(max_df=0.95, min_df=2)
+    dtm = vectorizer.fit_transform(processed_texts)
+    lda = LatentDirichletAllocation(n_components=3, random_state=42)
+    lda.fit(dtm)
+    topics = lda.transform(dtm).argmax(axis=1)
+    return topics
 
 combined_df = load_combined_data()
 if combined_df.empty:
     st.stop()
 
-st.sidebar.title("Keyword Filter")
-topic = st.sidebar.text_input("Enter a topic keyword:", "#Fitness")
+st.sidebar.title("Filter Settings")
+keyword = st.sidebar.text_input("Enter a topic keyword:", "#Fitness").lower().replace("#", "")
 
-if topic:
-    keyword = topic.lower().replace("#", "")
-    mask = combined_df['text'].str.lower().str.contains(keyword, na=False)
-    filtered_df = combined_df[mask].copy()
+filtered_df = combined_df[combined_df['text'].str.lower().str.contains(keyword, na=False)].copy()
 
-    if filtered_df.empty:
-        st.warning("No posts found for this topic.")
-        st.stop()
-
+if not filtered_df.empty:
     filtered_df = filtered_df.dropna(subset=['text', 'created_at'])
     filtered_df['text'] = filtered_df['text'].astype(str)
-    filtered_df['created_at'] = pd.to_datetime(filtered_df['created_at'])
     filtered_df['sentiment'] = filtered_df['text'].apply(compute_sentiment)
-    filtered_df['engagement'] = pd.to_numeric(filtered_df['engagement'], errors='coerce').fillna(0)
+    filtered_df['engagement'] = pd.to_numeric(filtered_df.get('engagement', 0), errors='coerce').fillna(0)
+    filtered_df['timestamp'] = pd.to_datetime(filtered_df['created_at'])
+    filtered_df['hour'] = filtered_df['timestamp'].dt.hour
+    filtered_df['is_media'] = filtered_df['text'].str.contains('https://t.co', na=False).astype(int)
+    filtered_df['topic'] = extract_topics(filtered_df['text'])
+    filtered_df['text_length'] = filtered_df['text'].apply(len)
+    filtered_df['hashtag_count'] = filtered_df['text'].apply(lambda x: x.count('#'))
 
-    st.subheader("📄 Sample Posts")
-    st.dataframe(filtered_df[['created_at', 'text', 'engagement', 'sentiment']].head(10))
+    st.success(f"✅ Total filtered posts: {filtered_df.shape[0]}")
 
-    st.subheader("📊 Engagement & Sentiment Over Time")
-    time_series = filtered_df.groupby(filtered_df['created_at'].dt.floor('h')).agg({
+    time_df = filtered_df.groupby(filtered_df['timestamp'].dt.floor('h')).agg({
+        'sentiment': 'mean',
         'engagement': 'sum',
-        'sentiment': 'mean'
-    }).reset_index()
+        'topic': lambda x: x.mode()[0] if not x.mode().empty else 0,
+        'hour': lambda x: x.mode()[0] if not x.mode().empty else 0,
+        'is_media': 'mean'
+    }).dropna()
 
-    if not time_series.empty:
-        fig, ax1 = plt.subplots()
-        ax1.plot(time_series['created_at'], time_series['engagement'], color='tab:blue')
-        ax1.set_ylabel('Engagement', color='tab:blue')
-        ax2 = ax1.twinx()
-        ax2.plot(time_series['created_at'], time_series['sentiment'], color='tab:orange')
-        ax2.set_ylabel('Sentiment', color='tab:orange')
-        fig.autofmt_xdate()
-        st.pyplot(fig)
+    st.header("📈 Topic-Driven Engagement Forecasting")
 
-    st.subheader("💬 Sentiment Distribution")
-    binned = pd.cut(filtered_df['sentiment'], bins=10)
-    counts = binned.value_counts().sort_index()
-    fig, ax = plt.subplots()
-    counts.plot(kind='bar', ax=ax, color='tab:green')
-    ax.set_xlabel('Sentiment Range')
-    ax.set_ylabel('Post Count')
-    st.pyplot(fig)
+    st.subheader("📌 Topic vs. Average Engagement")
+    st.bar_chart(filtered_df.groupby('topic')['engagement'].mean())
 
     st.subheader("🌐 Word Cloud")
     stop_words = set(stopwords.words('english'))
@@ -133,89 +113,85 @@ if topic:
     ax.axis('off')
     st.pyplot(fig)
 
-    st.subheader("📅 Optimal Posting Time")
-    filtered_df['hour'] = filtered_df['created_at'].dt.hour
+    st.subheader("⏰ Optimal Posting Times")
     hourly_engagement = filtered_df.groupby('hour')['engagement'].mean()
     fig, ax = plt.subplots()
-    hourly_engagement.plot(kind='bar', ax=ax, color='mediumpurple')
+    hourly_engagement.plot(kind='bar', ax=ax, color='skyblue')
     ax.set_xlabel('Hour of Day')
-    ax.set_ylabel('Average Engagement')
+    ax.set_ylabel('Avg Engagement')
+    ax.set_title('Hourly Engagement')
     st.pyplot(fig)
 
-    st.subheader("🧠 Topic Modeling")
-    
-    texts = filtered_df['text'].tolist()
-    stop_words = set(stopwords.words('english')) - {'run', 'pump'}
-    
-    processed_texts = [
-        " ".join([
-            word for word in doc.lower().split()
-            if (word.isalnum() or word.startswith('#') or word in ['🦵🏽', '💪🏽']) and word not in stop_words
-        ])
-        for doc in texts
-    ]
-
-    processed_texts = [doc for doc in processed_texts if len(doc.split()) > 1]
-
-    if len(processed_texts) >= 2:
-        vectorizer = CountVectorizer(max_df=0.9, min_df=1, max_features=1000)
-        dtm = vectorizer.fit_transform(processed_texts)
-        lda = LatentDirichletAllocation(n_components=3, random_state=42)
-        lda.fit(dtm)
-        words = vectorizer.get_feature_names_out()
-        for i, topic_dist in enumerate(lda.components_):
-            top_words = [words[i] for i in topic_dist.argsort()[-5:][::-1]]
-            st.markdown(f"**Topic {i+1}:** {' | '.join(top_words)}")
-
-    st.subheader("🔮 48-Hour Forecast (ARIMA)")
-    if len(time_series) >= 5:
+    st.subheader("📅 Forecast with ARIMA")
+    if len(time_df) >= 5:
         try:
-            model = ARIMA(time_series['engagement'], order=(1, 1, 1))
+            model = ARIMA(time_df['engagement'], order=(1, 1, 1))
             model_fit = model.fit()
-            forecast = model_fit.forecast(steps=48)
-            future_index = pd.date_range(start=time_series['created_at'].max(), periods=48, freq='h')
+            forecast = model_fit.forecast(steps=24)
+            future_index = pd.date_range(start=time_df.index.max(), periods=24, freq='h')
             fig, ax = plt.subplots()
             ax.plot(future_index, forecast, label='Forecasted Engagement', color='tab:blue')
             ax.set_xlabel('Time')
-            ax.set_ylabel('Forecasted Engagement')
+            ax.set_ylabel('Engagement')
             st.pyplot(fig)
         except Exception as e:
             st.warning(f"ARIMA Forecast failed: {e}")
 
-    st.subheader("📈 Predicting Engagement")
+    st.subheader("🔮 Forecast with Prophet")
     try:
-        result = preprocess_and_train(filtered_df)
-        st.success("✅ Model trained successfully!")
-        st.write(f"**R² Score**: {result['r2_score']:.2f}")
-        st.write(f"**RMSE**: {result['rmse']:.2f}")
-        chart_df = result['X_test'].copy()
-        chart_df['Predicted Engagement'] = result['y_pred']
-        chart_df['Actual Engagement'] = result['y_test'].values
+        prophet_df = time_df.reset_index().rename(columns={'timestamp': 'ds', 'engagement': 'y'})[['ds', 'y']]
+        prophet_model = Prophet()
+        prophet_model.fit(prophet_df)
+        future = prophet_model.make_future_dataframe(periods=24, freq='h')
+        forecast = prophet_model.predict(future)
+        fig1 = prophet_model.plot(forecast)
+        st.pyplot(fig1)
+        fig2 = prophet_model.plot_components(forecast)
+        st.pyplot(fig2)
+    except Exception as e:
+        st.warning(f"Prophet forecast error: {e}")
+
+    st.subheader("🧠 Time Series Regression with VAR")
+    try:
+        model_data = time_df[['engagement', 'sentiment', 'topic', 'hour', 'is_media']]
+        model = VAR(model_data)
+        results = model.fit(maxlags=1)
+        forecast = results.forecast(model_data.values[-1:], steps=24)
+        forecast_df = pd.DataFrame(forecast, columns=model_data.columns)
+        st.line_chart(forecast_df[['engagement']])
+        with st.expander("Show VAR Coefficients"):
+            st.dataframe(results.params)
+    except Exception as e:
+        st.warning(f"VAR model error: {e}")
+
+    st.subheader("📈 Predict Engagement (Regression)")
+    try:
+        features = ['sentiment', 'text_length', 'hashtag_count', 'is_media']
+        X = filtered_df[features].fillna(0)
+        y = filtered_df['engagement'].fillna(0)
+
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+        model = RandomForestRegressor(n_estimators=100, random_state=42)
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_test)
+
+        chart_df = X_test.copy()
+        chart_df['Predicted Engagement'] = y_pred
+        chart_df['Actual Engagement'] = y_test.values
+
         fig, ax = plt.subplots()
         ax.plot(chart_df.index, chart_df['Predicted Engagement'], label='Predicted', color='tab:purple')
         ax.plot(chart_df.index, chart_df['Actual Engagement'], label='Actual', color='tab:red')
         ax.set_title('Predicted vs Actual Engagement')
-        ax.set_xlabel('Index')
+        ax.set_xlabel('Post Index')
         ax.set_ylabel('Engagement')
         ax.legend()
         st.pyplot(fig)
     except Exception as e:
-        st.error(f"Model prediction error: {e}")
+        st.error(f"Regression model error: {e}")
 
-    try:
-        from prophet import Prophet
-        st.subheader("📅 Prophet Forecast (Global)")
-        df_prophet = combined_df[['created_at', 'engagement']].dropna().copy()
-        df_prophet = df_prophet.rename(columns={'created_at': 'ds', 'engagement': 'y'})
-        model = Prophet()
-        model.fit(df_prophet)
-        future = model.make_future_dataframe(periods=48, freq='h')
-        forecast = model.predict(future)
-        fig1 = model.plot(forecast)
-        st.pyplot(fig1)
-        fig2 = model.plot_components(forecast)
-        st.pyplot(fig2)
-    except Exception as e:
-        st.warning(f"Prophet model failed: {e}")
+    st.download_button("📥 Download Data", filtered_df.to_csv(index=False), file_name="filtered_topic_data.csv")
+else:
+    st.warning("No posts found for this keyword.")
 
 
