@@ -17,11 +17,22 @@ from prophet import Prophet
 import numpy as np
 
 # Download NLTK resources if not already present
-for resource in ['punkt', 'stopwords', 'vader_lexicon']:
+# Comprehensive NLTK resource download
+required_resources = [
+    'punkt',
+    'stopwords',
+    'vader_lexicon',
+    'averaged_perceptron_tagger',
+    'wordnet',
+    'omw-1.4'
+]
+
+for resource in required_resources:
     try:
-        nltk.data.find(f'tokenizers/{resource}' if resource == 'punkt' else f'corpora/{resource}')
+        nltk.data.find(resource)
     except LookupError:
         nltk.download(resource)
+
 
 st.set_page_config(page_title="Social Trends Forecaster", layout="wide")
 st.markdown("""
