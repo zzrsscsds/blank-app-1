@@ -14,71 +14,73 @@ import matplotlib.pyplot as plt
 from statsmodels.tsa.arima.model import ARIMA
 import numpy as np
 
-        try:
-            nltk.data.find('tokenizers/punkt')
-        except LookupError:
-            nltk.download('punkt')
-        try:
-            nltk.data.find('corpora/stopwords')
-        except LookupError:
-            nltk.download('stopwords')
-        try:
-            nltk.data.find('sentiment/vader_lexicon')
-        except LookupError:
-            nltk.download('vader_lexicon')
+# Download NLTK resources if not already present
+try:
+    nltk.data.find('tokenizers/punkt')
+except LookupError:
+    nltk.download('punkt')
+try:
+    nltk.data.find('corpora/stopwords')
+except LookupError:
+    nltk.download('stopwords')
+try:
+    nltk.data.find('sentiment/vader_lexicon')
+except LookupError:
+    nltk.download('vader_lexicon')
 
-        st.set_page_config(layout="wide")
-        st.title("\ud83d\udcca Real-Time Social Media Trend Forecaster")
+st.set_page_config(layout="wide")
+st.title("📊 Real-Time Social Media Trend Forecaster")
 
-        @st.cache_data
-        def load_combined_data():
-            try:
-                df = pd.read_csv("data/combined_social_data.csv")
-                df['created_at'] = pd.to_datetime(df['created_at'], errors='coerce')
-                st.write(f"Loaded CSV with shape: {df.shape}")
-                st.write(f"Columns: {list(df.columns)}")
-                return df
-            except FileNotFoundError:
-                st.error("Data file 'combined_social_data.csv' not found.")
-                return pd.DataFrame()
-            except Exception as e:
-                st.error(f"Error loading CSV: {e}")
-                return pd.DataFrame()
-                
+@st.cache_data
+def load_combined_data():
+    try:
+        df = pd.read_csv("data/combined_social_data.csv")
+        df['created_at'] = pd.to_datetime(df['created_at'], errors='coerce')
+        st.write(f"Loaded CSV with shape: {df.shape}")
+        st.write(f"Columns: {list(df.columns)}")
+        return df
+    except FileNotFoundError:
+        st.error("Data file 'combined_social_data.csv' not found.")
+        return pd.DataFrame()
+    except Exception as e:
+        st.error(f"Error loading CSV: {e}")
+        return pd.DataFrame()
+
 # Compute sentiment using VADER
-        try:
-            sid = SentimentIntensityAnalyzer()
-        except LookupError:
-            st.error("Failed to load VADER lexicon. Please ensure 'vader_lexicon' is downloaded.")
-            st.stop()
+try:
+    sid = SentimentIntensityAnalyzer()
+except LookupError:
+    st.error("Failed to load VADER lexicon. Please ensure 'vader_lexicon' is downloaded.")
+    st.stop()
 
-        def compute_sentiment(text):
-            try:
-                return sid.polarity_scores(str(text))['compound']
-            except:
-                return 0.0
+def compute_sentiment(text):
+    try:
+        return sid.polarity_scores(str(text))['compound']
+    except:
+        return 0.0
 
 # Engagement prediction function
-        def preprocess_and_train(df):
-            features = ['sentiment', 'text_length', 'hashtag_count', 'is_media']
-            df['text_length'] = df['text'].apply(len)
-            df['hashtag_count'] = df['text'].apply(lambda x: x.count('#'))
-            df['is_media'] = df['text'].str.contains('https://t.co', na=False).astype(int)
-            X = df[features].fillna(0)
-            y = df['engagement'].fillna(0)
-            if len(X) < 10:
-                raise ValueError("Not enough data for training (minimum 10 rows required).")
-            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-            model = RandomForestRegressor(n_estimators=100, random_state=42)
-            model.fit(X_train, y_train)
-            y_pred = model.predict(X_test)
-            return {
-                'r2_score': r2_score(y_test, y_pred),
-                'rmse': np.sqrt(mean_squared_error(y_test, y_pred)),
-                'X_test': X_test,
-                'y_test': y_test,
-                'y_pred': y_pred
-            }
+def preprocess_and_train(df):
+    features = ['sentiment', 'text_length', 'hashtag_count', 'is_media']
+    df['text_length'] = df['text'].apply(len)
+    df['hashtag_count'] = df['text'].apply(lambda x: x.count('#'))
+    df['is_media'] = df['text'].str.contains('https://t.co', na=False).astype(int)
+    X = df[features].fillna(0)
+    y = df['engagement'].fillna(0)
+    if len(X) < 10:
+        raise ValueError("Not enough data for training (minimum 10 rows required).")
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    model = RandomForestRegressor(n_estimators=100, random_state=42)
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    return {
+        'r2_score': r2_score(y_test, y_pred),
+        'rmse': np.sqrt(mean_squared_error(y_test, y_pred)),
+        'X_test': X_test,
+        'y_test': y_test,
+        'y_pred': y_pred
+    }
+
 
 
 combined_df = load_combined_data()
