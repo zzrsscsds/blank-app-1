@@ -1,18 +1,18 @@
-        import streamlit as st
-        import pandas as pd
-        import nltk
-        from nltk.corpus import stopwords
-        from nltk.tokenize import word_tokenize
-        from nltk.sentiment.vader import SentimentIntensityAnalyzer
-        from sklearn.feature_extraction.text import CountVectorizer
-        from sklearn.decomposition import LatentDirichletAllocation
-        from sklearn.model_selection import train_test_split
-        from sklearn.ensemble import RandomForestRegressor
-        from sklearn.metrics import r2_score, mean_squared_error
-        from wordcloud import WordCloud
-        import matplotlib.pyplot as plt
-        from statsmodels.tsa.arima.model import ARIMA
-        import numpy as np
+import streamlit as st
+import pandas as pd
+import nltk
+from nltk.corpus import stopwords
+from nltk.tokenize import word_tokenize
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.decomposition import LatentDirichletAllocation
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import r2_score, mean_squared_error
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+from statsmodels.tsa.arima.model import ARIMA
+import numpy as np
 
         try:
             nltk.data.find('tokenizers/punkt')
