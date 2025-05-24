@@ -73,10 +73,41 @@ def extract_topics(texts):
 def drop_constant_columns(df):
     """Drop columns with only a single unique value to prevent VAR errors."""
     return df.loc[:, df.nunique() > 1]
+    
 combined_df = load_combined_data()
 if combined_df.empty:
     st.stop()
+    
+# NewsAPI integration
+@st.cache_data
+def load_recent_news():
+    try:
+        newsapi = NewsApiClient(api_key="7af7d5e56edc4148aac908f2c9f86ac3")
+        start_date = (datetime.now() - timedelta(days=7)).strftime('%Y-%m-%d')
+        end_date = datetime.now().strftime('%Y-%m-%d')
+        articles = newsapi.get_everything(q="*", from_param=start_date, to=end_date, language='en', page_size=100)
+        news_df = pd.DataFrame([{
+            "published_at": a['publishedAt'],
+            "title": a['title'],
+            "description": a['description']
+        } for a in articles['articles']])
+        news_df['published_at'] = pd.to_datetime(news_df['published_at'])
+        news_df['text'] = news_df['title'].fillna('') + " " + news_df['description'].fillna('')
+        return news_df
+    except Exception as e:
+        st.warning(f"Failed to fetch news: {e}")
+        return pd.DataFrame()
 
+# News Preview Section
+if st.sidebar.checkbox("📰 Show Latest News Headlines"):
+    news_df = load_recent_news()
+    if not news_df.empty:
+        st.subheader("🗞 Recent News Highlights")
+        for i, row in news_df.head(5).iterrows():
+            st.markdown(f"**{row['published_at'].strftime('%Y-%m-%d %H:%M')}** - {row['title']}")
+    else:
+        st.info("No recent news available.")
+        
 st.sidebar.title("Filter Settings")
 keyword = st.sidebar.text_input("Enter a topic keyword:", "#Fitness").lower().replace("#", "")
 
