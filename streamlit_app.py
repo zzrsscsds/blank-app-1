@@ -81,16 +81,13 @@ def preprocess_and_train(df):
         'y_pred': y_pred
     }
 
-
-
+# Load and filter data
 combined_df = load_combined_data()
-
 if combined_df.empty:
     st.warning("No data loaded. Please check 'combined_social_data.csv'.")
     st.stop()
 
 filtered_df = pd.DataFrame()
-
 topic = st.text_input("Enter a topic keyword (e.g., #Fitness, Climate Change):", "#Fitness")
 
 if topic:
@@ -103,32 +100,25 @@ if topic:
     st.write(f"Total posts found: {filtered_df.shape[0]}")
 
     if not filtered_df.empty:
-        # Drop rows with empty or NaN 'text', but preserve as much data as possible
         filtered_df = filtered_df.dropna(subset=['text'])
         filtered_df['text'] = filtered_df['text'].astype(str)
 
-        # Compute sentiment if missing or invalid
         if 'sentiment' not in filtered_df.columns or filtered_df['sentiment'].isnull().all():
             filtered_df['sentiment'] = filtered_df['text'].apply(compute_sentiment)
 
-        # Compute engagement if missing
         if 'engagement' not in filtered_df.columns:
-            filtered_df['engagement'] = 0  # Placeholder; replace with actual logic if available
-
-        st.write(f"Filtered DataFrame shape after dropping NaNs: {filtered_df.shape}")
-        st.write("Sample texts:", filtered_df['text'].head(10).tolist())
+            filtered_df['engagement'] = 0
 
         filtered_df['sentiment'] = pd.to_numeric(filtered_df['sentiment'], errors='coerce')
         filtered_df['engagement'] = pd.to_numeric(filtered_df['engagement'], errors='coerce')
-        filtered_df = filtered_df.dropna(subset=["created_at"])  # Only require valid 'created_at'
+        filtered_df = filtered_df.dropna(subset=["created_at"])
 
-        # Engagement and Sentiment Over Time
         time_series = filtered_df.groupby(filtered_df['created_at'].dt.floor('H')).agg({
             'engagement': 'sum',
             'sentiment': 'mean'
         }).reset_index()
 
-# 替换原始 chartjs 写法为原生 Streamlit 图表方式
+        st.success("✅ Data preparation completed. Ready for visualization and modeling.")
 
 # --- 时间趋势图 ---
         st.subheader("📊 Engagement & Sentiment Over Time")
@@ -352,37 +342,39 @@ X_test = result['X_test']
 y_test = result['y_test']
 y_pred = result['y_pred']
 
-st.subheader("📈 Predicting Engagement (Enhanced Features)")
-filtered_df = filtered_df.rename(columns={"created_at": "timestamp"})
-try:
-    with st.spinner("Training enhanced regression model..."):
-        filtered_df['hour'] = filtered_df['timestamp'].dt.hour
-        filtered_df['is_weekend'] = filtered_df['timestamp'].dt.dayofweek >= 5
-        filtered_df['text_length'] = filtered_df['text'].apply(len)
-        filtered_df['hashtag_count'] = filtered_df['text'].apply(lambda x: x.count('#'))
-        filtered_df['is_media'] = filtered_df['text'].str.contains('https://t.co', na=False).astype(int)
+        # Enhanced Regression Features for Engagement Prediction
+        st.subheader("📈 Predicting Engagement (Enhanced Features)")
+        filtered_df = filtered_df.rename(columns={"created_at": "timestamp"})
+        try:
+            with st.spinner("Training enhanced regression model..."):
+                filtered_df['hour'] = filtered_df['timestamp'].dt.hour
+                filtered_df['is_weekend'] = filtered_df['timestamp'].dt.dayofweek >= 5
+                filtered_df['text_length'] = filtered_df['text'].apply(len)
+                filtered_df['hashtag_count'] = filtered_df['text'].apply(lambda x: x.count('#'))
+                filtered_df['is_media'] = filtered_df['text'].str.contains('https://t.co', na=False).astype(int)
 
-        features = ['sentiment', 'text_length', 'hashtag_count', 'is_media', 'hour', 'is_weekend']
-        X = filtered_df[features].fillna(0)
-        y = filtered_df['engagement'].fillna(0)
+                features = ['sentiment', 'text_length', 'hashtag_count', 'is_media', 'hour', 'is_weekend']
+                X = filtered_df[features].fillna(0)
+                y = filtered_df['engagement'].fillna(0)
 
-        if len(X) < 10:
-            raise ValueError("Not enough data for regression training (min 10 rows required).")
+                if len(X) < 10:
+                    raise ValueError("Not enough data for regression training (min 10 rows required).")
 
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-        model = RandomForestRegressor(n_estimators=100, random_state=42)
-        model.fit(X_train, y_train)
-        y_pred = model.predict(X_test)
+                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+                model = RandomForestRegressor(n_estimators=100, random_state=42)
+                model.fit(X_train, y_train)
+                y_pred = model.predict(X_test)
 
-        st.success("✅ Enhanced Model trained successfully!")
-        st.write(f"**R² Score**: {r2_score(y_test, y_pred):.2f}")
-        st.write(f"**RMSE**: {np.sqrt(mean_squared_error(y_test, y_pred)):.2f}")
+                st.success("✅ Enhanced Model trained successfully!")
+                st.write(f"**R² Score**: {r2_score(y_test, y_pred):.2f}")
+                st.write(f"**RMSE**: {np.sqrt(mean_squared_error(y_test, y_pred)):.2f}")
 
-        chart_df = X_test.copy()
-        chart_df['Predicted Engagement'] = y_pred
-        chart_df['Actual Engagement'] = y_test.values
+                chart_df = X_test.copy()
+                chart_df['Predicted Engagement'] = y_pred
+                chart_df['Actual Engagement'] = y_test.values
 
-        st.line_chart(chart_df[['Predicted Engagement', 'Actual Engagement']])
+                st.line_chart(chart_df[['Predicted Engagement', 'Actual Engagement']])
 
-except Exception as e:
-    st.error(f"❌ Enhanced model error: {e}")
+        except Exception as e:
+            st.error(f"❌ Enhanced model error: {e}")
+
