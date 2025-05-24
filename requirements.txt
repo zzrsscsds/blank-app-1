@@ -6,3 +6,4 @@ scikit-learn
 wordcloud
 statsmodels
 prophet
+newsapi-python
