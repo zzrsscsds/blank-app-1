@@ -143,12 +143,15 @@ if topic:
     st.pyplot(fig)
 
     st.subheader("🧠 Topic Modeling")
+   # 替代 word_tokenize，使用 str.split()，避免 punkt 依赖问题
     processed_texts = [
         " ".join([
-            word for word in word_tokenize(doc.lower())
-            if word.isalnum() and word not in stop_words
-        ]) for doc in filtered_df['text']
+            word for word in doc.lower().split()
+            if (word.isalnum() or word.startswith('#') or word in ['🦵🏽', '💪🏽']) and word not in stop_words
+        ])
+        for doc in texts
     ]
+
     processed_texts = [doc for doc in processed_texts if len(doc.split()) > 1]
 
     if len(processed_texts) >= 2:
