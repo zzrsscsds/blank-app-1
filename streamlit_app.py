@@ -69,7 +69,10 @@ def extract_topics(texts):
     lda.fit(dtm)
     topics = lda.transform(dtm).argmax(axis=1)
     return topics
-
+    
+def drop_constant_columns(df):
+    """Drop columns with only a single unique value to prevent VAR errors."""
+    return df.loc[:, df.nunique() > 1]
 combined_df = load_combined_data()
 if combined_df.empty:
     st.stop()
