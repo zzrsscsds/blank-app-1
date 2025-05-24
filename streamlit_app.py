@@ -275,13 +275,13 @@ if topic:
         else:
             st.warning("No data available for optimal posting times.")
 
-                st.subheader("📈 Predicting Engagement")
+         st.subheader("📈 Predicting Engagement")
 
         try:
             with st.spinner("Training ML model..."):
                 result = preprocess_and_train(filtered_df)
+                
             st.success("✅ Model trained successfully!")
-
             X_test = result['X_test']
             y_test = result['y_test']
             y_pred = result['y_pred']
@@ -304,7 +304,6 @@ if topic:
 
         except Exception as e:
             st.error(f"❌ Model training or plotting error: {e}")
-
 
 # Prophet Forecasting on Full Dataset (Global Time Series)
 st.subheader("📅 48-Hour Engagement Forecast (Global)")
