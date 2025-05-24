@@ -2,7 +2,6 @@ import streamlit as st
 import pandas as pd
 import nltk
 from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.decomposition import LatentDirichletAllocation
@@ -16,23 +15,15 @@ from statsmodels.tsa.arima.model import ARIMA
 from prophet import Prophet
 import numpy as np
 
-# Download NLTK resources if not already present
-# Comprehensive NLTK resource download
-required_resources = [
-    'punkt',
-    'stopwords',
-    'vader_lexicon',
-    'averaged_perceptron_tagger',
-    'wordnet',
-    'omw-1.4'
+# Download NLTK resources
+nltk_resources = [
+    'punkt', 'stopwords', 'vader_lexicon', 'averaged_perceptron_tagger', 'wordnet', 'omw-1.4'
 ]
-
-for resource in required_resources:
+for res in nltk_resources:
     try:
-        nltk.data.find(resource)
+        nltk.data.find(res)
     except LookupError:
-        nltk.download(resource)
-
+        nltk.download(res)
 
 st.set_page_config(page_title="Social Trends Forecaster", layout="wide")
 st.markdown("""
@@ -68,7 +59,7 @@ def extract_topics(texts):
     stop_words = set(stopwords.words('english'))
     processed_texts = [
         " ".join([
-            word for word in word_tokenize(doc.lower())
+            word for word in doc.lower().split()
             if word.isalnum() and word not in stop_words
         ]) for doc in texts if isinstance(doc, str)
     ]
