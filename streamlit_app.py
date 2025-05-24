@@ -143,7 +143,10 @@ if topic:
     st.pyplot(fig)
 
     st.subheader("🧠 Topic Modeling")
-   # 替代 word_tokenize，使用 str.split()，避免 punkt 依赖问题
+    
+    texts = filtered_df['text'].tolist()
+    stop_words = set(stopwords.words('english')) - {'run', 'pump'}
+    
     processed_texts = [
         " ".join([
             word for word in doc.lower().split()
