@@ -63,6 +63,22 @@ def extract_topics(texts):
             if word.isalnum() and word not in stop_words
         ]) for doc in texts if isinstance(doc, str)
     ]
+    # Prevent empty text from causing CountVectorizer to throw an error
+    processed_texts = [doc for doc in processed_texts if len(doc.strip()) > 0]
+    if len(processed_texts) < 2:
+        return [0] * len(texts)  # 或用 np.zeros_like(texts) 保持长度一致
+
+    vectorizer = CountVectorizer(max_df=0.95, min_df=2)
+    dtm = vectorizer.fit_transform(processed_texts)
+    lda = LatentDirichletAllocation(n_components=3, random_state=42)
+    lda.fit(dtm)
+    topics = lda.transform(dtm).argmax(axis=1)
+
+    # Keep the returned length consistent with the original texts
+    padded_topics = [topics[i] if i < len(topics) else 0 for i in range(len(texts))]
+    return padded_topics
+
+    ]
     vectorizer = CountVectorizer(max_df=0.95, min_df=2)
     dtm = vectorizer.fit_transform(processed_texts)
     lda = LatentDirichletAllocation(n_components=3, random_state=42)
