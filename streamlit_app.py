@@ -275,55 +275,36 @@ if topic:
         else:
             st.warning("No data available for optimal posting times.")
 
-        st.subheader("📈 Predicting Engagement")
-        filtered_df = filtered_df.rename(columns={"created_at": "timestamp"})
+                st.subheader("📈 Predicting Engagement")
+
         try:
             with st.spinner("Training ML model..."):
                 result = preprocess_and_train(filtered_df)
             st.success("✅ Model trained successfully!")
+
+            X_test = result['X_test']
+            y_test = result['y_test']
+            y_pred = result['y_pred']
+
             st.write(f"**R² Score**: {result['r2_score']:.2f}")
             st.write(f"**RMSE**: {result['rmse']:.2f}")
-            chart_df = result['X_test'].copy()
-            chart_df['Predicted Engagement'] = result['y_pred']
-            chart_df['Actual Engagement'] = result['y_test'].values
-            chart_config = {
-                "type": "line",
-                "data": {
-                    "labels": chart_df.index.astype(str).tolist(),
-                    "datasets": [
-                        {
-                            "label": "Predicted Engagement",
-                            "data": chart_df['Predicted Engagement'].tolist(),
-                            "borderColor": "#9467bd",
-                            "backgroundColor": "rgba(148, 103, 189, 0.2)",
-                            "fill": False
-                        },
-                        {
-                            "label": "Actual Engagement",
-                            "data": chart_df['Actual Engagement'].tolist(),
-                            "borderColor": "#d62728",
-                            "backgroundColor": "rgba(214, 39, 40, 0.2)",
-                            "fill": False
-                        }
-                    ]
-                },
-                "options": {
-                    "scales": {
-                        "y": {"title": {"display": True, "text": "Engagement"}},
-                        "x": {"title": {"display": True, "text": "Post Index"}}
-                    },
-                    "plugins": {
-                        "legend": {"display": True},
-                        "title": {"display": True, "text": "Predicted vs Actual Engagement"}
-                    }
-                }
-            }
-            st.write("```chartjs\n" + str(chart_config) + "\n```")
-        except Exception as e:
-            st.error(f"❌ Model error: {e}")
 
-    else:
-        st.warning(f"No posts found for '{topic}'. Check if the keyword exists in the data.")
+            chart_df = X_test.copy()
+            chart_df['Predicted Engagement'] = y_pred
+            chart_df['Actual Engagement'] = y_test.values
+
+            fig, ax = plt.subplots()
+            ax.plot(chart_df.index, chart_df['Predicted Engagement'], label='Predicted', color='tab:purple')
+            ax.plot(chart_df.index, chart_df['Actual Engagement'], label='Actual', color='tab:red')
+            ax.set_title('Predicted vs Actual Engagement')
+            ax.set_xlabel('Post Index')
+            ax.set_ylabel('Engagement')
+            ax.legend()
+            st.pyplot(fig)
+
+        except Exception as e:
+            st.error(f"❌ Model training or plotting error: {e}")
+
 
 # Prophet Forecasting on Full Dataset (Global Time Series)
 st.subheader("📅 48-Hour Engagement Forecast (Global)")
