@@ -63,37 +63,27 @@ def extract_topics(texts):
             if word.isalnum() and word not in stop_words
         ]) for doc in texts if isinstance(doc, str)
     ]
-    # Prevent empty text from causing CountVectorizer to throw an error
     processed_texts = [doc for doc in processed_texts if len(doc.strip()) > 0]
     if len(processed_texts) < 2:
-        return [0] * len(texts)  # 或用 np.zeros_like(texts) 保持长度一致
+        return [0] * len(texts)
 
     vectorizer = CountVectorizer(max_df=0.95, min_df=2)
     dtm = vectorizer.fit_transform(processed_texts)
     lda = LatentDirichletAllocation(n_components=3, random_state=42)
     lda.fit(dtm)
     topics = lda.transform(dtm).argmax(axis=1)
-
-    # Keep the returned length consistent with the original texts
     padded_topics = [topics[i] if i < len(topics) else 0 for i in range(len(texts))]
     return padded_topics
 
-    vectorizer = CountVectorizer(max_df=0.95, min_df=2)
-    dtm = vectorizer.fit_transform(processed_texts)
-    lda = LatentDirichletAllocation(n_components=3, random_state=42)
-    lda.fit(dtm)
-    topics = lda.transform(dtm).argmax(axis=1)
-    return topics
-    
 def drop_constant_columns(df):
     """Drop columns with only a single unique value to prevent VAR errors."""
     return df.loc[:, df.nunique() > 1]
-    
+
 combined_df = load_combined_data()
 if combined_df.empty:
     st.stop()
-    
-# NewsAPI integration
+
+# NewsAPI integration (unchanged)
 @st.cache_data
 def load_recent_news():
     try:
@@ -113,7 +103,7 @@ def load_recent_news():
         st.warning(f"Failed to fetch news: {e}")
         return pd.DataFrame()
 
-# News Preview Section
+# News Preview Section (unchanged)
 if st.sidebar.checkbox("📰 Show Latest News Headlines"):
     news_df = load_recent_news()
     if not news_df.empty:
@@ -122,7 +112,7 @@ if st.sidebar.checkbox("📰 Show Latest News Headlines"):
             st.markdown(f"**{row['published_at'].strftime('%Y-%m-%d %H:%M')}** - {row['title']}")
     else:
         st.info("No recent news available.")
-        
+
 st.sidebar.title("Filter Settings")
 keyword = st.sidebar.text_input("Enter a topic keyword:", "#Fitness").lower().replace("#", "")
 
@@ -205,13 +195,20 @@ if not filtered_df.empty:
     st.subheader("🧠 Time Series Regression with VAR")
     try:
         model_data = time_df[['engagement', 'sentiment', 'topic', 'hour', 'is_media']]
-        model = VAR(model_data)
-        results = model.fit(maxlags=1)
-        forecast = results.forecast(model_data.values[-1:], steps=24)
-        forecast_df = pd.DataFrame(forecast, columns=model_data.columns)
-        st.line_chart(forecast_df[['engagement']])
-        with st.expander("Show VAR Coefficients"):
-            st.dataframe(results.params)
+        # Drop constant columns to prevent VAR errors
+        model_data = drop_constant_columns(model_data)
+        if len(model_data.columns) < 2:
+            st.warning("Not enough variable columns for VAR model after dropping constants.")
+        elif len(model_data) < 2:
+            st.warning("Not enough data points for VAR model.")
+        else:
+            model = VAR(model_data)
+            results = model.fit(maxlags=1)
+            forecast = results.forecast(model_data.values[-1:], steps=24)
+            forecast_df = pd.DataFrame(forecast, columns=model_data.columns)
+            st.line_chart(forecast_df[['engagement']])
+            with st.expander("Show VAR Coefficients"):
+                st.dataframe(results.params)
     except Exception as e:
         st.warning(f"VAR model error: {e}")
 
@@ -244,5 +241,3 @@ if not filtered_df.empty:
     st.download_button("📥 Download Data", filtered_df.to_csv(index=False), file_name="filtered_topic_data.csv")
 else:
     st.warning("No posts found for this keyword.")
-
-
