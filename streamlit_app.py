@@ -55,6 +55,12 @@ def compute_sentiment(text):
     except:
         return 0.0
 
+def add_extra_features(df):
+    df['emoji_count'] = df['text'].str.count(r'[😀-🙏]')
+    df['question_flag'] = df['text'].str.contains(r'\?').astype(int)
+    df['text_length_log'] = np.log1p(df['text'].apply(len))
+    return df
+    
 def extract_topics(texts):
     stop_words = set(stopwords.words('english'))
     processed_texts = [
@@ -117,6 +123,7 @@ st.sidebar.title("Filter Settings")
 keyword = st.sidebar.text_input("Enter a topic keyword:", "#Fitness").lower().replace("#", "")
 
 filtered_df = combined_df[combined_df['text'].str.lower().str.contains(keyword, na=False)].copy()
+filtered_df = add_extra_features(filtered_df)
 
 if not filtered_df.empty:
     filtered_df = filtered_df.dropna(subset=['text', 'created_at'])
