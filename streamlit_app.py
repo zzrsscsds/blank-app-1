@@ -177,15 +177,34 @@ if not filtered_df.empty:
         try:
             model = ARIMA(time_df['engagement'], order=(1, 1, 1))
             model_fit = model.fit()
-            forecast = model_fit.forecast(steps=24)
-            future_index = pd.date_range(start=time_df.index.max(), periods=24, freq='h')
+
+            # 获取预测值和置信区间
+            forecast_result = model_fit.get_forecast(steps=24)
+            forecast_mean = forecast_result.predicted_mean
+            forecast_ci = forecast_result.conf_int()
+
+            # 创建时间索引
+            future_index = pd.date_range(start=time_df.index.max() + pd.Timedelta(hours=1), periods=24, freq='h')
+
+            # 绘图
             fig, ax = plt.subplots()
-            ax.plot(future_index, forecast, label='Forecasted Engagement', color='tab:blue')
+            ax.plot(future_index, forecast_mean, label='Forecasted Engagement', color='tab:blue')
+            ax.fill_between(future_index, forecast_ci.iloc[:, 0], forecast_ci.iloc[:, 1],
+                            color='blue', alpha=0.2, label='95% Confidence Interval')
             ax.set_xlabel('Time')
             ax.set_ylabel('Engagement')
+            ax.set_title('ARIMA 24-Hour Engagement Forecast')
+            ax.legend()
             st.pyplot(fig)
+
+            # 显示 RMSE
+            actual = time_df['engagement'].iloc[-24:].values
+            predicted = model_fit.predict(start=len(time_df)-24, end=len(time_df)-1)
+            rmse = np.sqrt(np.mean((actual - predicted)**2))
+            st.info(f"RMSE (last 24h backtest): {rmse:.2f}")
         except Exception as e:
             st.warning(f"ARIMA Forecast failed: {e}")
+
 
     st.subheader("🔮 Forecast with Prophet")
     try:
