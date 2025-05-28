@@ -124,6 +124,8 @@ keyword = st.sidebar.text_input("Enter a topic keyword:", "#Fitness").lower().re
 
 filtered_df = combined_df[combined_df['text'].str.lower().str.contains(keyword, na=False)].copy()
 filtered_df = add_extra_features(filtered_df)
+filtered_df['capital_word_count'] = filtered_df['text'].str.findall(r'\b[A-Z]{2,}\b').apply(len)
+filtered_df['punctuation_count'] = filtered_df['text'].str.count(r'[.!?]')
 
 if not filtered_df.empty:
     filtered_df = filtered_df.dropna(subset=['text', 'created_at'])
@@ -224,7 +226,12 @@ if not filtered_df.empty:
         features = ['sentiment', 'text_length', 'hashtag_count', 'is_media']
         X = filtered_df[features].fillna(0)
         y = filtered_df['engagement'].fillna(0)
-
+    model_choice = st.selectbox("Select Regression Model", ["RandomForest", "GradientBoosting"])
+    if model_choice == "RandomForest":
+        model = RandomForestRegressor(n_estimators=100, random_state=42)
+    else:
+        from sklearn.ensemble import GradientBoostingRegressor
+        model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, random_state=42)
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
         model = RandomForestRegressor(n_estimators=100, random_state=42)
         model.fit(X_train, y_train)
