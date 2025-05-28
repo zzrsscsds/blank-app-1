@@ -226,14 +226,15 @@ if not filtered_df.empty:
         features = ['sentiment', 'text_length', 'hashtag_count', 'is_media']
         X = filtered_df[features].fillna(0)
         y = filtered_df['engagement'].fillna(0)
-    model_choice = st.selectbox("Select Regression Model", ["RandomForest", "GradientBoosting"])
-    if model_choice == "RandomForest":
-        model = RandomForestRegressor(n_estimators=100, random_state=42)
-    else:
-        from sklearn.ensemble import GradientBoostingRegressor
-        model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, random_state=42)
+
+        model_choice = st.selectbox("Select Regression Model", ["RandomForest", "GradientBoosting"])
+        if model_choice == "RandomForest":
+            model = RandomForestRegressor(n_estimators=100, random_state=42)
+        else:
+            from sklearn.ensemble import GradientBoostingRegressor
+            model = GradientBoostingRegressor(n_estimators=100, learning_rate=0.1, random_state=42)
+
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-        model = RandomForestRegressor(n_estimators=100, random_state=42)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
 
@@ -249,6 +250,7 @@ if not filtered_df.empty:
         ax.set_ylabel('Engagement')
         ax.legend()
         st.pyplot(fig)
+
     except Exception as e:
         st.error(f"Regression model error: {e}")
 
