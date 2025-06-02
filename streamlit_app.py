@@ -259,6 +259,62 @@ def hybrid_prophet_xgb(df, forecast_periods=24):
         xgb_model = XGBRegressor(n_estimators=150, max_depth=6, learning_rate=0.1, subsample=0.8, random_state=42)
         xgb_model.fit(X_train, y_train)
         y_pred = xgb_model.predict(X_test)
+                # 可视化 XGBoost 特征重要性
+        importances = xgb_model.feature_importances_
+        importance_df = pd.DataFrame({
+            'Feature': X.columns,
+            'Importance': importances
+        }).sort_values(by='Importance', ascending=False)
+
+        st.subheader("🔍 Feature Importance (XGBoost)")
+        fig, ax = plt.subplots()
+        ax.barh(importance_df['Feature'], importance_df['Importance'], color='orange')
+        ax.set_title("Feature Importance")
+        ax.invert_yaxis()
+        st.pyplot(fig)
+        st.subheader("📊 Residual Analysis")
+        residuals = y_test - y_pred
+
+        # 残差直方图
+        fig1, ax1 = plt.subplots()
+        ax1.hist(residuals, bins=20, color='salmon', edgecolor='black')
+        ax1.set_title("Distribution of Residuals")
+        st.pyplot(fig1)
+
+        # 残差 vs 预测值
+        fig2, ax2 = plt.subplots()
+        ax2.scatter(y_pred, residuals, alpha=0.5)
+        ax2.axhline(0, color='gray', linestyle='--')
+        ax2.set_xlabel("Predicted Engagement")
+        ax2.set_ylabel("Residuals")
+        ax2.set_title("Residuals vs Predicted")
+        st.pyplot(fig2)
+        st.subheader("📐 Prediction Confidence Interval (Bootstrap)")
+
+        # 简单 bootstrap 推断置信区间
+        from sklearn.utils import resample
+
+        n_iterations = 100
+        predictions = []
+        for _ in range(n_iterations):
+            X_bs, y_bs = resample(X_train, y_train)
+            xgb_model.fit(X_bs, y_bs)
+            pred_bs = xgb_model.predict(X_test)
+            predictions.append(pred_bs)
+
+        pred_array = np.array(predictions)
+        lower = np.percentile(pred_array, 2.5, axis=0)
+        upper = np.percentile(pred_array, 97.5, axis=0)
+
+        # 绘制误差带图
+        fig, ax = plt.subplots()
+        ax.plot(y_test.index, y_pred, label='Prediction', color='blue')
+        ax.fill_between(y_test.index, lower, upper, color='lightblue', alpha=0.4, label='95% CI')
+        ax.plot(y_test.index, y_test, label='Actual', color='red')
+        ax.set_title("Predicted vs Actual with Confidence Interval")
+        ax.legend()
+        st.pyplot(fig)
+
 
         future_df = forecast[forecast['ds'] > prophet_df['ds'].max()].copy()
         future_df['created_at'] = pd.to_datetime(future_df['ds'])
