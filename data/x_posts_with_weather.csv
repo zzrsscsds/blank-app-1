@@ -1,101 +1,101 @@
 created_at,text,likes,retweets,replies,language,hashtags,sentiment,hour_of_day,is_weekend,temperature,precipitation,engagement
-2025-05-15 00:00:00,Sample post 1: Loving my workout! #Run,76,1,0,en,"['#Run', '#Motivation']",POSITIVE,0,False,11.35771357561085,0.5,77
-2025-05-15 00:15:00,Sample post 2: Loving my workout! #HealthyLiving,48,4,4,en,['#HealthyLiving'],POSITIVE,0,False,19.319319734458382,0.5,52
-2025-05-15 00:30:00,Sample post 3: Loving my workout! #Fitness,78,11,8,en,['#Fitness'],POSITIVE,0,False,11.173640605793045,0.0,89
-2025-05-15 00:45:00,Sample post 4: Loving my workout! #Fitness,50,0,3,en,['#Fitness'],POSITIVE,0,False,15.132124037043305,0.0,50
-2025-05-15 01:00:00,Sample post 5: Loving my workout! #HealthyLiving,31,13,8,en,"['#HealthyLiving', '#Motivation']",POSITIVE,1,False,11.676619515499102,1.0,44
-2025-05-15 01:15:00,Sample post 6: Loving my workout! #Fitness,71,1,8,en,['#Fitness'],POSITIVE,1,False,14.99239206146323,0.0,72
-2025-05-15 01:30:00,Sample post 7: Loving my workout! #Fitness,68,9,3,en,['#Fitness'],POSITIVE,1,False,18.90599514271222,0.0,77
-2025-05-15 01:45:00,Sample post 8: Loving my workout! #Run,11,9,7,en,"['#Run', '#Motivation']",POSITIVE,1,False,17.104712776808963,0.0,20
-2025-05-15 02:00:00,Sample post 9: Loving my workout! #Fitness,89,3,6,en,['#Fitness'],POSITIVE,2,False,14.673105770946,0.0,92
-2025-05-15 02:15:00,Sample post 10: Loving my workout! #Fitness,92,8,4,en,"['#Fitness', '#Motivation']",NEGATIVE,2,False,12.035155908668825,0.5,100
-2025-05-15 02:30:00,Sample post 11: Loving my workout! #Fitness,64,4,1,en,"['#Fitness', '#Motivation']",POSITIVE,2,False,15.858644949691962,1.0,68
-2025-05-15 02:45:00,Sample post 12: Loving my workout! #Run,41,15,3,en,"['#Run', '#Motivation']",POSITIVE,2,False,19.495751918160828,0.0,56
-2025-05-15 03:00:00,Sample post 13: Loving my workout! #Run,47,9,9,en,"['#Run', '#Motivation']",POSITIVE,3,False,13.236727799164571,0.5,56
-2025-05-15 03:15:00,Sample post 14: Loving my workout! #Fitness,60,11,2,en,"['#Fitness', '#Motivation']",POSITIVE,3,False,15.500022217601913,1.0,71
-2025-05-15 03:30:00,Sample post 15: Loving my workout! #Run,26,19,6,en,"['#Run', '#Motivation']",POSITIVE,3,False,12.917306246960788,0.0,45
-2025-05-15 03:45:00,Sample post 16: Loving my workout! #Fitness,28,8,0,en,"['#Fitness', '#Motivation']",POSITIVE,3,False,13.018713517899913,0.0,36
-2025-05-15 04:00:00,Sample post 17: Loving my workout! #Run,61,19,9,en,"['#Run', '#Motivation']",NEGATIVE,4,False,18.796163767032667,0.0,80
-2025-05-15 04:15:00,Sample post 18: Loving my workout! #Fitness,74,6,2,en,['#Fitness'],POSITIVE,4,False,10.644270028300145,0.0,80
-2025-05-15 04:30:00,Sample post 19: Loving my workout! #Fitness,68,6,6,en,['#Fitness'],NEGATIVE,4,False,11.137069112521898,0.0,74
-2025-05-15 04:45:00,Sample post 20: Loving my workout! #Fitness,4,11,3,en,"['#Fitness', '#Motivation']",POSITIVE,4,False,14.196848366031123,0.0,15
-2025-05-15 05:00:00,Sample post 21: Loving my workout! #Run,97,14,8,en,['#Run'],POSITIVE,5,False,15.621713584024832,0.5,111
-2025-05-15 05:15:00,Sample post 22: Loving my workout! #HealthyLiving,27,11,0,en,['#HealthyLiving'],POSITIVE,5,False,19.40707934834197,0.0,38
-2025-05-15 05:30:00,Sample post 23: Loving my workout! #Fitness,74,18,9,en,"['#Fitness', '#Motivation']",POSITIVE,5,False,12.170863547362416,0.0,92
-2025-05-15 05:45:00,Sample post 24: Loving my workout! #Fitness,26,14,4,en,"['#Fitness', '#Motivation']",POSITIVE,5,False,13.705105367682561,0.0,40
-2025-05-15 06:00:00,Sample post 25: Loving my workout! #Fitness,24,18,8,en,"['#Fitness', '#Motivation']",POSITIVE,6,False,10.625843824657782,1.0,42
-2025-05-15 06:15:00,Sample post 26: Loving my workout! #HealthyLiving,13,0,0,en,"['#HealthyLiving', '#Motivation']",NEGATIVE,6,False,18.668517583471278,0.5,13
-2025-05-15 06:30:00,Sample post 27: Loving my workout! #Fitness,66,17,0,en,"['#Fitness', '#Motivation']",POSITIVE,6,False,11.105574497665003,0.0,83
-2025-05-15 06:45:00,Sample post 28: Loving my workout! #Fitness,93,9,5,en,"['#Fitness', '#Motivation']",POSITIVE,6,False,13.503430904640455,0.0,102
-2025-05-15 07:00:00,Sample post 29: Loving my workout! #Fitness,11,13,4,en,['#Fitness'],POSITIVE,7,False,19.115885980155973,0.0,24
-2025-05-15 07:15:00,Sample post 30: Loving my workout! #HealthyLiving,88,18,4,en,"['#HealthyLiving', '#Motivation']",POSITIVE,7,False,13.040465396083647,0.0,106
-2025-05-15 07:30:00,Sample post 31: Loving my workout! #Fitness,25,15,1,en,['#Fitness'],POSITIVE,7,False,10.890652714627933,0.5,40
-2025-05-15 07:45:00,Sample post 32: Loving my workout! #Fitness,8,7,7,en,"['#Fitness', '#Motivation']",POSITIVE,7,False,18.987682070390715,0.0,15
-2025-05-15 08:00:00,Sample post 33: Loving my workout! #HealthyLiving,88,12,2,en,"['#HealthyLiving', '#Motivation']",NEGATIVE,8,False,18.983978163125467,0.5,100
-2025-05-15 08:15:00,Sample post 34: Loving my workout! #Run,91,5,1,en,['#Run'],POSITIVE,8,False,14.652146738216233,0.0,96
-2025-05-15 08:30:00,Sample post 35: Loving my workout! #Fitness,31,0,2,en,"['#Fitness', '#Motivation']",NEGATIVE,8,False,11.166475312404383,0.0,31
-2025-05-15 08:45:00,Sample post 36: Loving my workout! #Run,46,16,3,en,"['#Run', '#Motivation']",POSITIVE,8,False,18.14191600627868,0.0,62
-2025-05-15 09:00:00,Sample post 37: Loving my workout! #Fitness,45,8,3,en,['#Fitness'],POSITIVE,9,False,12.07715911500852,0.0,53
-2025-05-15 09:15:00,Sample post 38: Loving my workout! #HealthyLiving,81,12,9,en,['#HealthyLiving'],POSITIVE,9,False,13.016710883895481,0.0,93
-2025-05-15 09:30:00,Sample post 39: Loving my workout! #Fitness,64,17,6,en,"['#Fitness', '#Motivation']",NEGATIVE,9,False,15.865835732224957,0.0,81
-2025-05-15 09:45:00,Sample post 40: Loving my workout! #Fitness,41,15,9,en,"['#Fitness', '#Motivation']",POSITIVE,9,False,10.241393633068341,0.0,56
-2025-05-15 10:00:00,Sample post 41: Loving my workout! #HealthyLiving,67,16,8,en,"['#HealthyLiving', '#Motivation']",POSITIVE,10,False,11.77109512124711,0.5,83
-2025-05-15 10:15:00,Sample post 42: Loving my workout! #Fitness,81,18,1,en,['#Fitness'],POSITIVE,10,False,16.430254296773423,0.0,99
-2025-05-15 10:30:00,Sample post 43: Loving my workout! #HealthyLiving,70,9,0,en,['#HealthyLiving'],POSITIVE,10,False,11.600613782202277,0.0,79
-2025-05-15 10:45:00,Sample post 44: Loving my workout! #Fitness,55,9,9,en,"['#Fitness', '#Motivation']",POSITIVE,10,False,12.62859812511255,0.0,64
-2025-05-15 11:00:00,Sample post 45: Loving my workout! #Run,78,16,0,en,['#Run'],POSITIVE,11,False,14.069751604884065,0.0,94
-2025-05-15 11:15:00,Sample post 46: Loving my workout! #Fitness,95,15,9,en,['#Fitness'],NEGATIVE,11,False,19.09044446421818,0.0,110
-2025-05-15 11:30:00,Sample post 47: Loving my workout! #Run,5,16,7,en,"['#Run', '#Motivation']",POSITIVE,11,False,15.11566698523894,0.0,21
-2025-05-15 11:45:00,Sample post 48: Loving my workout! #HealthyLiving,76,8,8,en,['#HealthyLiving'],POSITIVE,11,False,15.426320065236155,0.0,84
-2025-05-15 12:00:00,Sample post 49: Loving my workout! #Fitness,7,7,8,en,['#Fitness'],POSITIVE,12,False,13.67506638977177,0.0,14
-2025-05-15 12:15:00,Sample post 50: Loving my workout! #Fitness,83,5,8,en,['#Fitness'],POSITIVE,12,False,14.559888214893988,0.0,88
-2025-05-15 12:30:00,Sample post 51: Loving my workout! #Fitness,47,1,3,en,"['#Fitness', '#Motivation']",POSITIVE,12,False,15.305364675609466,0.0,48
-2025-05-15 12:45:00,Sample post 52: Loving my workout! #Run,58,4,7,en,['#Run'],POSITIVE,12,False,18.912521967937895,0.0,62
-2025-05-15 13:00:00,Sample post 53: Loving my workout! #Run,45,10,0,en,"['#Run', '#Motivation']",NEGATIVE,13,False,13.183803877562958,0.0,55
-2025-05-15 13:15:00,Sample post 54: Loving my workout! #Run,13,18,4,en,"['#Run', '#Motivation']",NEGATIVE,13,False,14.972085926454795,0.0,31
-2025-05-15 13:30:00,Sample post 55: Loving my workout! #Fitness,56,0,8,en,"['#Fitness', '#Motivation']",POSITIVE,13,False,13.513369586042353,0.0,56
-2025-05-15 13:45:00,Sample post 56: Loving my workout! #Fitness,85,13,7,en,['#Fitness'],NEGATIVE,13,False,11.871798418324904,0.5,98
-2025-05-15 14:00:00,Sample post 57: Loving my workout! #Fitness,72,7,6,en,"['#Fitness', '#Motivation']",POSITIVE,14,False,11.217839141862118,0.0,79
-2025-05-15 14:15:00,Sample post 58: Loving my workout! #Fitness,17,16,4,en,['#Fitness'],POSITIVE,14,False,10.334341779116427,0.0,33
-2025-05-15 14:30:00,Sample post 59: Loving my workout! #Fitness,28,11,9,en,"['#Fitness', '#Motivation']",POSITIVE,14,False,15.54477036038067,0.0,39
-2025-05-15 14:45:00,Sample post 60: Loving my workout! #Fitness,45,13,3,en,['#Fitness'],POSITIVE,14,False,12.812810221662287,0.0,58
-2025-05-15 15:00:00,Sample post 61: Loving my workout! #Fitness,25,15,0,en,"['#Fitness', '#Motivation']",POSITIVE,15,False,15.972591973507184,0.0,40
-2025-05-15 15:15:00,Sample post 62: Loving my workout! #Run,91,18,9,en,['#Run'],POSITIVE,15,False,17.45831771490567,0.0,109
-2025-05-15 15:30:00,Sample post 63: Loving my workout! #Fitness,47,4,0,en,['#Fitness'],POSITIVE,15,False,14.697350515455584,0.0,51
-2025-05-15 15:45:00,Sample post 64: Loving my workout! #Fitness,58,11,1,en,"['#Fitness', '#Motivation']",POSITIVE,15,False,12.73758397443408,0.0,69
-2025-05-15 16:00:00,Sample post 65: Loving my workout! #Run,73,0,9,en,['#Run'],NEGATIVE,16,False,17.360930162509973,0.0,73
-2025-05-15 16:15:00,Sample post 66: Loving my workout! #HealthyLiving,44,19,9,en,"['#HealthyLiving', '#Motivation']",POSITIVE,16,False,17.382034778398598,0.5,63
-2025-05-15 16:30:00,Sample post 67: Loving my workout! #Run,44,19,6,en,['#Run'],POSITIVE,16,False,16.82915122782795,0.0,63
-2025-05-15 16:45:00,Sample post 68: Loving my workout! #Fitness,30,3,0,en,['#Fitness'],NEGATIVE,16,False,15.416336715430775,0.0,33
-2025-05-15 17:00:00,Sample post 69: Loving my workout! #Fitness,32,9,4,en,"['#Fitness', '#Motivation']",POSITIVE,17,False,19.30894242921648,0.0,41
-2025-05-15 17:15:00,Sample post 70: Loving my workout! #HealthyLiving,25,6,3,en,['#HealthyLiving'],NEGATIVE,17,False,14.228588102455149,0.0,31
-2025-05-15 17:30:00,Sample post 71: Loving my workout! #HealthyLiving,80,8,0,en,"['#HealthyLiving', '#Motivation']",POSITIVE,17,False,10.360544321101358,0.0,88
-2025-05-15 17:45:00,Sample post 72: Loving my workout! #Run,54,16,4,en,['#Run'],NEGATIVE,17,False,13.992632444015527,0.0,70
-2025-05-15 18:00:00,Sample post 73: Loving my workout! #Fitness,41,10,2,en,"['#Fitness', '#Motivation']",POSITIVE,18,False,11.600529570378265,0.5,51
-2025-05-15 18:15:00,Sample post 74: Loving my workout! #Fitness,62,6,9,en,"['#Fitness', '#Motivation']",NEGATIVE,18,False,14.04749613343724,0.0,68
-2025-05-15 18:30:00,Sample post 75: Loving my workout! #Fitness,47,10,5,en,['#Fitness'],POSITIVE,18,False,15.95533384762704,0.5,57
-2025-05-15 18:45:00,Sample post 76: Loving my workout! #Fitness,59,2,6,en,"['#Fitness', '#Motivation']",NEGATIVE,18,False,12.786042196987443,0.0,61
-2025-05-15 19:00:00,Sample post 77: Loving my workout! #Run,42,16,2,en,"['#Run', '#Motivation']",POSITIVE,19,False,16.41878006941437,0.0,58
-2025-05-15 19:15:00,Sample post 78: Loving my workout! #Run,94,5,9,en,['#Run'],POSITIVE,19,False,18.274283140574546,0.0,99
-2025-05-15 19:30:00,Sample post 79: Loving my workout! #Fitness,15,0,9,en,"['#Fitness', '#Motivation']",NEGATIVE,19,False,10.020675533717396,0.0,15
-2025-05-15 19:45:00,Sample post 80: Loving my workout! #Fitness,27,18,7,en,"['#Fitness', '#Motivation']",POSITIVE,19,False,12.425803005248639,0.5,45
-2025-05-15 20:00:00,Sample post 81: Loving my workout! #Fitness,58,15,7,en,"['#Fitness', '#Motivation']",POSITIVE,20,False,13.88368649371304,0.0,73
-2025-05-15 20:15:00,Sample post 82: Loving my workout! #Run,50,15,5,en,"['#Run', '#Motivation']",NEGATIVE,20,False,16.377680046141226,0.0,65
-2025-05-15 20:30:00,Sample post 83: Loving my workout! #Run,1,14,1,en,['#Run'],POSITIVE,20,False,11.948836460508549,0.0,15
-2025-05-15 20:45:00,Sample post 84: Loving my workout! #HealthyLiving,38,15,9,en,"['#HealthyLiving', '#Motivation']",POSITIVE,20,False,11.284574905658799,0.0,53
-2025-05-15 21:00:00,Sample post 85: Loving my workout! #Fitness,64,9,9,en,"['#Fitness', '#Motivation']",POSITIVE,21,False,11.130570052816807,0.0,73
-2025-05-15 21:15:00,Sample post 86: Loving my workout! #HealthyLiving,24,17,3,en,"['#HealthyLiving', '#Motivation']",POSITIVE,21,False,10.507052592000605,0.5,41
-2025-05-15 21:30:00,Sample post 87: Loving my workout! #HealthyLiving,16,9,7,en,['#HealthyLiving'],POSITIVE,21,False,17.406347973737304,0.0,25
-2025-05-15 21:45:00,Sample post 88: Loving my workout! #Run,91,17,8,en,['#Run'],POSITIVE,21,False,12.464483234985364,0.5,108
-2025-05-15 22:00:00,Sample post 89: Loving my workout! #HealthyLiving,61,12,2,en,['#HealthyLiving'],POSITIVE,22,False,15.297546666626825,0.0,73
-2025-05-15 22:15:00,Sample post 90: Loving my workout! #HealthyLiving,60,6,2,en,['#HealthyLiving'],POSITIVE,22,False,18.04251671119953,0.0,66
-2025-05-15 22:30:00,Sample post 91: Loving my workout! #Fitness,51,1,3,en,['#Fitness'],POSITIVE,22,False,16.594332174746224,0.0,52
-2025-05-15 22:45:00,Sample post 92: Loving my workout! #Fitness,63,10,7,en,"['#Fitness', '#Motivation']",POSITIVE,22,False,17.59871520635039,0.0,73
-2025-05-15 23:00:00,Sample post 93: Loving my workout! #HealthyLiving,64,8,0,en,"['#HealthyLiving', '#Motivation']",POSITIVE,23,False,15.301080893648606,0.0,72
-2025-05-15 23:15:00,Sample post 94: Loving my workout! #Fitness,96,14,3,en,"['#Fitness', '#Motivation']",POSITIVE,23,False,13.57380101061657,0.5,110
-2025-05-15 23:30:00,Sample post 95: Loving my workout! #Run,74,19,5,en,"['#Run', '#Motivation']",NEGATIVE,23,False,14.242658674476914,0.0,93
-2025-05-15 23:45:00,Sample post 96: Loving my workout! #Fitness,86,8,8,en,"['#Fitness', '#Motivation']",POSITIVE,23,False,17.59508119612196,0.5,94
-2025-05-16 00:00:00,Sample post 97: Loving my workout! #Fitness,54,0,6,en,['#Fitness'],POSITIVE,0,False,17.40907638137791,1.0,54
-2025-05-16 00:15:00,Sample post 98: Loving my workout! #HealthyLiving,38,19,1,en,"['#HealthyLiving', '#Motivation']",POSITIVE,0,False,15.804811550434612,0.0,57
-2025-05-16 00:30:00,Sample post 99: Loving my workout! #HealthyLiving,31,10,5,en,['#HealthyLiving'],NEGATIVE,0,False,10.951702862557637,0.0,41
-2025-05-16 00:45:00,Sample post 100: Loving my workout! #HealthyLiving,87,6,2,en,['#HealthyLiving'],POSITIVE,0,False,13.359359813581268,0.5,93
+2025-05-15 00:00:00,Sample post 1: Loving my workout! #Fitness,31,2,4,en,['#Fitness'],POSITIVE,0,False,18.837553196736614,0.0,33
+2025-05-15 00:15:00,Sample post 2: Loving my workout! #Fitness,20,0,1,en,"['#Fitness', '#Motivation']",POSITIVE,0,False,19.734038272620534,0.0,20
+2025-05-15 00:30:00,Sample post 3: Loving my workout! #Run,84,12,0,en,"['#Run', '#Motivation']",POSITIVE,0,False,12.951238862815632,0.5,96
+2025-05-15 00:45:00,Sample post 4: Loving my workout! #HealthyLiving,84,5,7,en,['#HealthyLiving'],POSITIVE,0,False,10.692734856981952,0.0,89
+2025-05-15 01:00:00,Sample post 5: Loving my workout! #Run,72,6,8,en,"['#Run', '#Motivation']",NEGATIVE,1,False,13.307354648467342,0.0,78
+2025-05-15 01:15:00,Sample post 6: Loving my workout! #HealthyLiving,2,3,1,en,"['#HealthyLiving', '#Motivation']",POSITIVE,1,False,19.5836460116726,0.0,5
+2025-05-15 01:30:00,Sample post 7: Loving my workout! #Fitness,17,15,0,en,"['#Fitness', '#Motivation']",NEGATIVE,1,False,18.12323378484895,0.0,32
+2025-05-15 01:45:00,Sample post 8: Loving my workout! #Fitness,98,15,0,en,['#Fitness'],POSITIVE,1,False,15.342071225457225,0.0,113
+2025-05-15 02:00:00,Sample post 9: Loving my workout! #HealthyLiving,66,1,1,en,['#HealthyLiving'],NEGATIVE,2,False,12.507897804759178,0.0,67
+2025-05-15 02:15:00,Sample post 10: Loving my workout! #Fitness,53,2,5,en,['#Fitness'],POSITIVE,2,False,18.700649554856454,0.0,55
+2025-05-15 02:30:00,Sample post 11: Loving my workout! #Fitness,88,13,8,en,"['#Fitness', '#Motivation']",POSITIVE,2,False,19.656678764877793,0.0,101
+2025-05-15 02:45:00,Sample post 12: Loving my workout! #Fitness,9,2,4,en,['#Fitness'],POSITIVE,2,False,18.2196507596489,0.0,11
+2025-05-15 03:00:00,Sample post 13: Loving my workout! #HealthyLiving,7,8,0,en,['#HealthyLiving'],NEGATIVE,3,False,13.81599560511929,1.0,15
+2025-05-15 03:15:00,Sample post 14: Loving my workout! #Run,80,13,9,en,"['#Run', '#Motivation']",POSITIVE,3,False,16.055141315571014,0.0,93
+2025-05-15 03:30:00,Sample post 15: Loving my workout! #HealthyLiving,65,4,2,en,['#HealthyLiving'],POSITIVE,3,False,15.8030366468839,0.5,69
+2025-05-15 03:45:00,Sample post 16: Loving my workout! #Fitness,42,14,9,en,"['#Fitness', '#Motivation']",NEGATIVE,3,False,17.059536486440003,0.0,56
+2025-05-15 04:00:00,Sample post 17: Loving my workout! #Fitness,62,19,6,en,"['#Fitness', '#Motivation']",NEGATIVE,4,False,16.23248435623375,0.5,81
+2025-05-15 04:15:00,Sample post 18: Loving my workout! #Run,90,10,9,en,"['#Run', '#Motivation']",POSITIVE,4,False,19.195744203901157,1.0,100
+2025-05-15 04:30:00,Sample post 19: Loving my workout! #Fitness,47,10,5,en,"['#Fitness', '#Motivation']",POSITIVE,4,False,17.27664383700903,0.5,57
+2025-05-15 04:45:00,Sample post 20: Loving my workout! #HealthyLiving,17,7,0,en,['#HealthyLiving'],POSITIVE,4,False,10.923496732277881,1.0,24
+2025-05-15 05:00:00,Sample post 21: Loving my workout! #Fitness,67,9,7,en,"['#Fitness', '#Motivation']",POSITIVE,5,False,19.844853098147816,0.0,76
+2025-05-15 05:15:00,Sample post 22: Loving my workout! #Fitness,45,15,2,en,"['#Fitness', '#Motivation']",NEGATIVE,5,False,15.454632674597446,0.0,60
+2025-05-15 05:30:00,Sample post 23: Loving my workout! #Run,9,1,4,en,['#Run'],POSITIVE,5,False,16.52922218498022,0.0,10
+2025-05-15 05:45:00,Sample post 24: Loving my workout! #Fitness,30,8,1,en,['#Fitness'],POSITIVE,5,False,12.084358365109246,0.0,38
+2025-05-15 06:00:00,Sample post 25: Loving my workout! #Fitness,79,11,4,en,['#Fitness'],POSITIVE,6,False,16.88914092529925,0.5,90
+2025-05-15 06:15:00,Sample post 26: Loving my workout! #Fitness,37,14,0,en,['#Fitness'],POSITIVE,6,False,14.272921377016793,0.0,51
+2025-05-15 06:30:00,Sample post 27: Loving my workout! #Fitness,26,11,4,en,"['#Fitness', '#Motivation']",POSITIVE,6,False,15.495373810268937,0.0,37
+2025-05-15 06:45:00,Sample post 28: Loving my workout! #HealthyLiving,39,13,5,en,['#HealthyLiving'],NEGATIVE,6,False,12.02889049317518,0.0,52
+2025-05-15 07:00:00,Sample post 29: Loving my workout! #Run,48,1,1,en,"['#Run', '#Motivation']",POSITIVE,7,False,14.866890593795894,0.0,49
+2025-05-15 07:15:00,Sample post 30: Loving my workout! #Fitness,4,14,0,en,['#Fitness'],POSITIVE,7,False,10.015148183024483,0.0,18
+2025-05-15 07:30:00,Sample post 31: Loving my workout! #Fitness,53,11,3,en,"['#Fitness', '#Motivation']",POSITIVE,7,False,10.996359092535734,0.0,64
+2025-05-15 07:45:00,Sample post 32: Loving my workout! #Fitness,46,18,6,en,"['#Fitness', '#Motivation']",POSITIVE,7,False,17.568361480310145,0.0,64
+2025-05-15 08:00:00,Sample post 33: Loving my workout! #Fitness,46,4,3,en,['#Fitness'],POSITIVE,8,False,17.474769264507607,0.0,50
+2025-05-15 08:15:00,Sample post 34: Loving my workout! #Fitness,88,13,8,en,['#Fitness'],POSITIVE,8,False,10.806154241737971,0.0,101
+2025-05-15 08:30:00,Sample post 35: Loving my workout! #Run,51,19,4,en,"['#Run', '#Motivation']",NEGATIVE,8,False,19.60330160639725,0.5,70
+2025-05-15 08:45:00,Sample post 36: Loving my workout! #Fitness,36,2,3,en,['#Fitness'],POSITIVE,8,False,16.818380673335046,0.5,38
+2025-05-15 09:00:00,Sample post 37: Loving my workout! #HealthyLiving,1,5,7,en,['#HealthyLiving'],POSITIVE,9,False,16.80512619607631,0.0,6
+2025-05-15 09:15:00,Sample post 38: Loving my workout! #Run,93,18,2,en,['#Run'],POSITIVE,9,False,16.01184349715674,0.0,111
+2025-05-15 09:30:00,Sample post 39: Loving my workout! #Fitness,17,18,1,en,"['#Fitness', '#Motivation']",POSITIVE,9,False,18.703410926451234,0.5,35
+2025-05-15 09:45:00,Sample post 40: Loving my workout! #HealthyLiving,18,9,5,en,['#HealthyLiving'],POSITIVE,9,False,13.259289027470315,0.5,27
+2025-05-15 10:00:00,Sample post 41: Loving my workout! #HealthyLiving,13,9,1,en,['#HealthyLiving'],NEGATIVE,10,False,15.312325082241447,0.0,22
+2025-05-15 10:15:00,Sample post 42: Loving my workout! #Run,36,2,2,en,"['#Run', '#Motivation']",NEGATIVE,10,False,12.613397331744995,0.0,38
+2025-05-15 10:30:00,Sample post 43: Loving my workout! #HealthyLiving,27,14,3,en,['#HealthyLiving'],NEGATIVE,10,False,16.930513549815643,0.0,41
+2025-05-15 10:45:00,Sample post 44: Loving my workout! #Fitness,40,0,8,en,['#Fitness'],NEGATIVE,10,False,17.04433749720083,0.0,40
+2025-05-15 11:00:00,Sample post 45: Loving my workout! #Fitness,37,13,6,en,"['#Fitness', '#Motivation']",POSITIVE,11,False,18.445484262529035,1.0,50
+2025-05-15 11:15:00,Sample post 46: Loving my workout! #Fitness,43,10,5,en,"['#Fitness', '#Motivation']",POSITIVE,11,False,13.15664408391481,0.0,53
+2025-05-15 11:30:00,Sample post 47: Loving my workout! #Fitness,17,14,5,en,['#Fitness'],POSITIVE,11,False,16.643543587273612,0.0,31
+2025-05-15 11:45:00,Sample post 48: Loving my workout! #Fitness,40,1,0,en,"['#Fitness', '#Motivation']",POSITIVE,11,False,15.461192013629637,0.5,41
+2025-05-15 12:00:00,Sample post 49: Loving my workout! #Fitness,57,5,1,en,"['#Fitness', '#Motivation']",POSITIVE,12,False,13.089958605665757,0.5,62
+2025-05-15 12:15:00,Sample post 50: Loving my workout! #Fitness,51,19,4,en,['#Fitness'],POSITIVE,12,False,14.712429652598228,0.0,70
+2025-05-15 12:30:00,Sample post 51: Loving my workout! #Fitness,81,1,5,en,"['#Fitness', '#Motivation']",POSITIVE,12,False,14.863710475917529,0.0,82
+2025-05-15 12:45:00,Sample post 52: Loving my workout! #Run,87,18,1,en,"['#Run', '#Motivation']",POSITIVE,12,False,12.066110898335722,0.0,105
+2025-05-15 13:00:00,Sample post 53: Loving my workout! #Run,75,1,0,en,"['#Run', '#Motivation']",POSITIVE,13,False,16.407011030635914,0.0,76
+2025-05-15 13:15:00,Sample post 54: Loving my workout! #Run,21,12,8,en,['#Run'],POSITIVE,13,False,14.784992236980711,0.0,33
+2025-05-15 13:30:00,Sample post 55: Loving my workout! #Fitness,72,5,3,en,"['#Fitness', '#Motivation']",NEGATIVE,13,False,16.744142856192706,0.0,77
+2025-05-15 13:45:00,Sample post 56: Loving my workout! #Fitness,23,4,1,en,"['#Fitness', '#Motivation']",POSITIVE,13,False,10.019963626177756,0.5,27
+2025-05-15 14:00:00,Sample post 57: Loving my workout! #Fitness,15,9,2,en,"['#Fitness', '#Motivation']",POSITIVE,14,False,12.029798622375818,0.0,24
+2025-05-15 14:15:00,Sample post 58: Loving my workout! #Fitness,38,8,1,en,"['#Fitness', '#Motivation']",POSITIVE,14,False,16.01203811230468,1.0,46
+2025-05-15 14:30:00,Sample post 59: Loving my workout! #HealthyLiving,19,19,3,en,['#HealthyLiving'],POSITIVE,14,False,12.741596340399767,1.0,38
+2025-05-15 14:45:00,Sample post 60: Loving my workout! #Run,78,4,1,en,['#Run'],POSITIVE,14,False,15.907966916231544,0.0,82
+2025-05-15 15:00:00,Sample post 61: Loving my workout! #Fitness,8,18,3,en,"['#Fitness', '#Motivation']",POSITIVE,15,False,13.7751455850382,0.0,26
+2025-05-15 15:15:00,Sample post 62: Loving my workout! #Run,70,19,1,en,['#Run'],POSITIVE,15,False,11.904187988494952,0.0,89
+2025-05-15 15:30:00,Sample post 63: Loving my workout! #Run,74,3,5,en,"['#Run', '#Motivation']",POSITIVE,15,False,11.046677539540056,0.0,77
+2025-05-15 15:45:00,Sample post 64: Loving my workout! #HealthyLiving,34,8,2,en,"['#HealthyLiving', '#Motivation']",POSITIVE,15,False,10.962594170983927,0.0,42
+2025-05-15 16:00:00,Sample post 65: Loving my workout! #Fitness,29,5,0,en,['#Fitness'],POSITIVE,16,False,17.75355908451601,0.0,34
+2025-05-15 16:15:00,Sample post 66: Loving my workout! #Fitness,20,1,8,en,"['#Fitness', '#Motivation']",POSITIVE,16,False,16.72263719457991,0.0,21
+2025-05-15 16:30:00,Sample post 67: Loving my workout! #Fitness,59,3,4,en,['#Fitness'],POSITIVE,16,False,11.835713305975005,0.0,62
+2025-05-15 16:45:00,Sample post 68: Loving my workout! #Run,81,13,4,en,['#Run'],POSITIVE,16,False,12.645746191189689,0.0,94
+2025-05-15 17:00:00,Sample post 69: Loving my workout! #Fitness,74,8,6,en,['#Fitness'],NEGATIVE,17,False,12.60723985446748,0.0,82
+2025-05-15 17:15:00,Sample post 70: Loving my workout! #Fitness,47,17,6,en,['#Fitness'],POSITIVE,17,False,14.025737215594695,0.0,64
+2025-05-15 17:30:00,Sample post 71: Loving my workout! #HealthyLiving,66,2,3,en,['#HealthyLiving'],POSITIVE,17,False,17.497410477342513,0.5,68
+2025-05-15 17:45:00,Sample post 72: Loving my workout! #Run,33,12,2,en,['#Run'],POSITIVE,17,False,18.583386527097773,0.5,45
+2025-05-15 18:00:00,Sample post 73: Loving my workout! #HealthyLiving,13,2,7,en,['#HealthyLiving'],POSITIVE,18,False,14.573963873734552,0.5,15
+2025-05-15 18:15:00,Sample post 74: Loving my workout! #Fitness,44,10,3,en,"['#Fitness', '#Motivation']",POSITIVE,18,False,13.838563259601624,0.5,54
+2025-05-15 18:30:00,Sample post 75: Loving my workout! #Fitness,21,13,3,en,['#Fitness'],POSITIVE,18,False,16.068856695254976,1.0,34
+2025-05-15 18:45:00,Sample post 76: Loving my workout! #Fitness,77,11,8,en,"['#Fitness', '#Motivation']",NEGATIVE,18,False,11.601364600668235,0.0,88
+2025-05-15 19:00:00,Sample post 77: Loving my workout! #HealthyLiving,84,15,4,en,"['#HealthyLiving', '#Motivation']",NEGATIVE,19,False,14.814661283620717,0.0,99
+2025-05-15 19:15:00,Sample post 78: Loving my workout! #Fitness,51,3,0,en,"['#Fitness', '#Motivation']",POSITIVE,19,False,11.5737458107057,0.0,54
+2025-05-15 19:30:00,Sample post 79: Loving my workout! #Fitness,19,14,5,en,['#Fitness'],POSITIVE,19,False,17.21695982420666,0.5,33
+2025-05-15 19:45:00,Sample post 80: Loving my workout! #HealthyLiving,99,11,0,en,"['#HealthyLiving', '#Motivation']",NEGATIVE,19,False,12.979329356147185,0.5,110
+2025-05-15 20:00:00,Sample post 81: Loving my workout! #Fitness,5,2,7,en,['#Fitness'],POSITIVE,20,False,14.330260667436185,0.0,7
+2025-05-15 20:15:00,Sample post 82: Loving my workout! #Run,75,7,4,en,"['#Run', '#Motivation']",POSITIVE,20,False,10.889160608374958,0.0,82
+2025-05-15 20:30:00,Sample post 83: Loving my workout! #HealthyLiving,93,9,9,en,"['#HealthyLiving', '#Motivation']",NEGATIVE,20,False,15.981764019095134,0.5,102
+2025-05-15 20:45:00,Sample post 84: Loving my workout! #Run,76,13,3,en,"['#Run', '#Motivation']",POSITIVE,20,False,16.65744480592648,0.0,89
+2025-05-15 21:00:00,Sample post 85: Loving my workout! #Run,53,5,9,en,"['#Run', '#Motivation']",NEGATIVE,21,False,17.61748673575946,0.0,58
+2025-05-15 21:15:00,Sample post 86: Loving my workout! #Fitness,35,6,8,en,"['#Fitness', '#Motivation']",POSITIVE,21,False,12.307465400798698,0.5,41
+2025-05-15 21:30:00,Sample post 87: Loving my workout! #HealthyLiving,21,9,4,en,"['#HealthyLiving', '#Motivation']",POSITIVE,21,False,12.44713333236983,0.0,30
+2025-05-15 21:45:00,Sample post 88: Loving my workout! #Fitness,72,1,3,en,['#Fitness'],POSITIVE,21,False,14.324589245197965,0.5,73
+2025-05-15 22:00:00,Sample post 89: Loving my workout! #Fitness,79,18,6,en,"['#Fitness', '#Motivation']",POSITIVE,22,False,12.064008406116336,0.0,97
+2025-05-15 22:15:00,Sample post 90: Loving my workout! #Fitness,41,1,8,en,"['#Fitness', '#Motivation']",POSITIVE,22,False,12.117706920109505,0.0,42
+2025-05-15 22:30:00,Sample post 91: Loving my workout! #Fitness,39,2,0,en,"['#Fitness', '#Motivation']",NEGATIVE,22,False,16.101121237542504,0.5,41
+2025-05-15 22:45:00,Sample post 92: Loving my workout! #HealthyLiving,89,1,0,en,['#HealthyLiving'],POSITIVE,22,False,17.000230928713357,0.0,90
+2025-05-15 23:00:00,Sample post 93: Loving my workout! #HealthyLiving,63,13,0,en,['#HealthyLiving'],POSITIVE,23,False,16.18194007571403,1.0,76
+2025-05-15 23:15:00,Sample post 94: Loving my workout! #Run,30,7,1,en,['#Run'],NEGATIVE,23,False,10.635217681246766,0.5,37
+2025-05-15 23:30:00,Sample post 95: Loving my workout! #Run,10,12,9,en,"['#Run', '#Motivation']",POSITIVE,23,False,18.751970397405234,0.0,22
+2025-05-15 23:45:00,Sample post 96: Loving my workout! #Run,34,6,3,en,['#Run'],POSITIVE,23,False,17.957767356382274,0.0,40
+2025-05-16 00:00:00,Sample post 97: Loving my workout! #Fitness,78,1,7,en,"['#Fitness', '#Motivation']",POSITIVE,0,False,11.665854243900734,0.0,79
+2025-05-16 00:15:00,Sample post 98: Loving my workout! #Fitness,66,14,6,en,['#Fitness'],POSITIVE,0,False,16.477938809063527,0.0,80
+2025-05-16 00:30:00,Sample post 99: Loving my workout! #Run,20,9,7,en,"['#Run', '#Motivation']",POSITIVE,0,False,12.345273058117138,0.0,29
+2025-05-16 00:45:00,Sample post 100: Loving my workout! #Run,15,7,7,en,['#Run'],NEGATIVE,0,False,18.340085287156935,0.0,22
