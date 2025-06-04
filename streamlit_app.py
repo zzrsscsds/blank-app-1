@@ -674,6 +674,7 @@ if daily_social_df.empty:
 
 news_df = load_recent_news()
 if not news_df.empty:
+    news_df['date'] = pd.to_datetime(news_df['published_at']).dt.floor('D')
     news_daily = news_df.groupby(news_df['published_at'].dt.floor('D')).agg({
         'sentiment': 'mean',
         'topic': lambda x: x.mode()[0] if not x.mode().empty else 0
